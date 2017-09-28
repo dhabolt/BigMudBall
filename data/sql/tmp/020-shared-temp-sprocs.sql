@@ -14,6 +14,9 @@ go
 CREATE PROCEDURE ##InsertName (
 	@Name VARCHAR(255),
 	@Alphabetic VARCHAR(255),
+	@Wikipedia VARCHAR(75) = NULL,
+	@DataDate VARCHAR(50) = '????',
+	@DataType VARCHAR(50) = 'Technology',
 	@NameType VARCHAR(20),
 	@EntityTableId INT,
 	@RelatedId INT,
@@ -48,7 +51,7 @@ CREATE PROCEDURE ##InsertName (
 	SELECT @NameDataId = nd.name_data_id FROM name_data nd WHERE nd.entity_table_id = @EntityTableId AND nd.related_id = @RelatedId
 	IF @NameDataId IS NULL AND @NameTypeId = @NameTypeFullId AND @NameSubtypeId = @NameSubtypeStandardId BEGIN
 		INSERT INTO name_data (entity_table_id, related_id, full_alphabetic, full_name, data1, data2, primary1_id, primary2_id, primary3_id, imdb, wiki, ibdb)
-		VALUES (@EntityTableId, @RelatedId, @FullAlphabetic, @FullName, @DataMissing, @Technology, @PrimaryIdEmpty, @PrimaryIdEmpty, @PrimaryIdEmpty, @DataMissing, @DataMissing, @DataMissing)
+		VALUES (@EntityTableId, @RelatedId, @FullAlphabetic, @FullName, @DataDate, @DataType, @PrimaryIdEmpty, @PrimaryIdEmpty, @PrimaryIdEmpty, @DataMissing, @Wikipedia, @DataMissing)
 	END
 
 END

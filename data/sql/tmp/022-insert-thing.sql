@@ -1,14 +1,19 @@
 USE illustrated2
 GO
 
-DECLARE @FullName1 VARCHAR(255) = 'FIRST LAST',
-		@Alphabetic1 VARCHAR(255) = 'LAST, FIRST',
-		@FullNameOther VARCHAR(255) = '',
-		@AlphabeticOther VARCHAR(255) = '',
-		@FirstName VARCHAR(60) = 'FIRST',
-		@LastName VARCHAR(60) = 'LAST',
-		@MiddleName VARCHAR(60) = '',
-		@UniqueAdd VARCHAR(60) = NULL, -- person.unique_add
+DECLARE @StandardName VARCHAR(255) = '',
+		@StandardAlphabetic VARCHAR(255) = '',
+		--@Wikipedia VARCHAR(75) = '',
+		--@DataDate VARCHAR(50) = '',
+		--@DataType VARCHAR(50) = '',
+		@OtherName1 VARCHAR(255) = '',
+		@OtherAlphabetic1 VARCHAR(255) = '',
+		@OtherName2 VARCHAR(255) = '',
+		@OtherAlphabetic2 VARCHAR(255) = '',
+		@OtherName3 VARCHAR(255) = '',
+		@OtherAlphabetic3 VARCHAR(255) = '',
+		@OtherName4 VARCHAR(255) = '',
+		@OtherAlphabetic4 VARCHAR(255) = '',
 		@HomeUrl VARCHAR(255) = '',
 		@BlogUrl VARCHAR(255) = '',
 		@TwitterUrl VARCHAR(255) = '',
@@ -23,100 +28,101 @@ DECLARE @FullName1 VARCHAR(255) = 'FIRST LAST',
 		@PluralsightUrl VARCHAR(255) = ''
 
 -- Constants
-DECLARE @EntityTablePersonId INT = 1
-DECLARE @NameTypeFullId INT = 1001, @NameTypePartId INT = 1002
-DECLARE @NameSubtypeStandardId INT = 2001, @NameSubtypeFirstId INT = 2008, @NameSubtypeLastId INT = 2009, @NameSubtypeFormalId INT = 2002, @NameSubtypeOtherId INT = 2004, @NameSubtypeMiddleId INT = 2010
-DECLARE @NameSubtypeLookupId INT = 2019
-DECLARE @EntityTypeTechnologyId INT = 151027, @EntityCategoryTechnologyId INT = 151026, @DateAccuracyYearId INT = 100023
+DECLARE @EntityTableIdThing INT = 50001, @ThingTypeIdTechnology INT = 151025
+DECLARE @NameTypeIdFull INT = 1001, @NameTypeIdPart INT = 1002
+DECLARE @NameSubtypeIdStandard INT = 2001, @NameSubtypeIdOther INT = 2004
+DECLARE @NameSubtypeIdLookup INT = 2019
+DECLARE @EntityTypeIdTechnology INT = 151027, @EntityCategoryIdTechnology INT = 151026, @DateAccuracyIdYear INT = 100023
 DECLARE @DisplayOrderDefault INT = 9999, @DataMissing VARCHAR(20) = '????', @Technology VARCHAR(20) = 'Technology', @PrimaryIdEmpty INT = 19636
 DECLARE @UrlTypeIdHome INT = 28004, @UrlTypeIdSocial INT = 150715, @UrlTypeIdOther INT = 28005, @UrlTypeIdBlog INT = 28010
 DECLARE @CompanyIdTwitter INT = 51528, @CompanyIdGitHub INT = 51757, @CompanyIdLinkedIn INT = 51541, @CompanyIdFacebook INT = 51304, @CompanyIdPluralsight INT = 51768
 DECLARE @CompanyIdYouTube INT = 51099, @CompanyIdMedium INT = 51762, @CompanyIdGooglePlus INT = 51765, @CompanyIdInstagram INT = 51755, @CompanyIdStackOverflow INT = 51773
 
 -- Variables
-DECLARE @UniqueNameId INT, @NameId INT, @PersonId INT, @FullName VARCHAR(255), @FullAlphabetic VARCHAR(255)
+DECLARE @UniqueNameId INT, @NameId INT, @ThingId INT, @FullName VARCHAR(255), @FullAlphabetic VARCHAR(255)
 
 SET NOCOUNT ON
 
 BEGIN TRANSACTION
 
 BEGIN TRY
-	SELECT @PersonId = person_id FROM person WHERE name = @FullName1 AND unique_add = @UniqueAdd
-	IF @PersonId IS NOT NULL BEGIN
-		RAISERROR('The person already exists so we are aborting. Use the unique_add if we need to create a unique person.', 11, 1) -- Severity of 10 or lower WILL NOT BE HANDLED BY TRY/CATCH
+	SELECT @ThingId = thing_id FROM thing WHERE name = @StandardName
+	IF @ThingId IS NOT NULL BEGIN
+		RAISERROR('The thing ''%s'' already exists so we are aborting.', 11, 1, @StandardName) -- Severity of 10 or lower WILL NOT BE HANDLED BY TRY/CATCH
 	END
 
-	INSERT INTO person (name) VALUES (@FullName1)
-	SET @PersonId = SCOPE_IDENTITY()
+	INSERT INTO thing (thing_type_id, name) VALUES (@ThingTypeIdTechnology, @StandardName)
+	SET @ThingId = SCOPE_IDENTITY()
 
 	INSERT INTO entity_list (entity_table_id, related_id, list_id, category_id, sort_order, start_accuracy_id, end_accuracy_id)
-	VALUES(@EntityTablePersonId, @PersonId, @EntityTypeTechnologyId, @EntityCategoryTechnologyId, @DisplayOrderDefault, @DateAccuracyYearId, @DateAccuracyYearId)
+	VALUES(@EntityTableIdThing, @ThingId, @EntityTypeIdTechnology, @EntityCategoryIdTechnology, @DisplayOrderDefault, @DateAccuracyIdYear, @DateAccuracyIdYear)
 
-	IF @FullName1 != '' BEGIN
+	IF @StandardName != '' BEGIN
 		EXEC ##InsertName 
-			@Name = @FullName1, 
-			@Alphabetic = @Alphabetic1,
-			@NameType = 'FullName1', 
-			@EntityTableId = @EntityTablePersonId, 
-			@RelatedId = @PersonId, 
-			@NameTypeId = @NameTypeFullId, 
-			@NameSubtypeId = @NameSubtypeStandardId, 
+			@Name = @StandardName, 
+			@Alphabetic = @StandardAlphabetic,
+			@Wikipedia = @Wikipedia,
+			@NameType = 'StandardName', 
+			@EntityTableId = @EntityTableIdThing, 
+			@RelatedId = @ThingId, 
+			@NameTypeId = @NameTypeIdFull, 
+			@NameSubtypeId = @NameSubtypeIdStandard, 
 			@SortOrder = @DisplayOrderDefault
 	END
 
-	IF @FullNameOther != '' BEGIN
+	IF @OtherName1 != '' BEGIN
 		EXEC ##InsertName 
-			@Name = @FullNameOther, 
-			@Alphabetic = @AlphabeticOther,
-			@NameType = 'FullNameOther', 
-			@NameTypeId = @NameTypeFullId, 
-			@NameSubtypeId = @NameSubtypeOtherId, 
-			@EntityTableId = @EntityTablePersonId, 
-			@RelatedId = @PersonId, 
+			@Name = @OtherName1, 
+			@Alphabetic = @OtherAlphabetic1,
+			@NameType = 'OtherName1', 
+			@EntityTableId = @EntityTableIdThing, 
+			@RelatedId = @ThingId, 
+			@NameTypeId = @NameTypeIdFull, 
+			@NameSubtypeId = @NameSubtypeIdOther, 
 			@SortOrder = @DisplayOrderDefault
 	END
 
-	IF @FirstName != '' BEGIN
+	IF @OtherName2 != '' BEGIN
 		EXEC ##InsertName 
-			@Name = @FirstName, 
-			@Alphabetic = @FirstName,
-			@NameType = 'FirstName', 
-			@NameTypeId = @NameTypePartId, 
-			@NameSubtypeId = @NameSubtypeFirstId, 
-			@EntityTableId = @EntityTablePersonId, 
-			@RelatedId = @PersonId, 
+			@Name = @OtherName2, 
+			@Alphabetic = @OtherAlphabetic2,
+			@NameType = 'OtherName2', 
+			@EntityTableId = @EntityTableIdThing, 
+			@RelatedId = @ThingId, 
+			@NameTypeId = @NameTypeIdFull, 
+			@NameSubtypeId = @NameSubtypeIdOther, 
 			@SortOrder = @DisplayOrderDefault
 	END
 
-	IF @LastName != '' BEGIN
+	IF @OtherName3 != '' BEGIN
 		EXEC ##InsertName 
-			@Name = @LastName, 
-			@Alphabetic = @LastName,
-			@NameType = 'LastName', 
-			@NameTypeId = @NameTypePartId, 
-			@NameSubtypeId = @NameSubtypeLastId, 
-			@EntityTableId = @EntityTablePersonId, 
-			@RelatedId = @PersonId, 
+			@Name = @OtherName3, 
+			@Alphabetic = @OtherAlphabetic3,
+			@NameType = 'OtherName3', 
+			@EntityTableId = @EntityTableIdThing, 
+			@RelatedId = @ThingId, 
+			@NameTypeId = @NameTypeIdFull, 
+			@NameSubtypeId = @NameSubtypeIdOther, 
 			@SortOrder = @DisplayOrderDefault
 	END
 
-	IF @MiddleName != '' BEGIN
+	IF @OtherName4 != '' BEGIN
 		EXEC ##InsertName 
-			@Name = @MiddleName, 
-			@Alphabetic = @MiddleName,
-			@NameType = 'MiddleName', 
-			@NameTypeId = @NameTypePartId, 
-			@NameSubtypeId = @NameSubtypeMiddleId, 
-			@EntityTableId = @EntityTablePersonId, 
-			@RelatedId = @PersonId, 
+			@Name = @OtherName4, 
+			@Alphabetic = @OtherAlphabetic4,
+			@NameType = 'OtherName4', 
+			@EntityTableId = @EntityTableIdThing, 
+			@RelatedId = @ThingId, 
+			@NameTypeId = @NameTypeIdFull, 
+			@NameSubtypeId = @NameSubtypeIdOther, 
 			@SortOrder = @DisplayOrderDefault
 	END
 
 	IF @HomeUrl != '' BEGIN
 		EXEC ##InsertUrl 
 			@Url = @HomeUrl, 
-			@EntityTableId = @EntityTablePersonId, 
-			@RelatedId = @PersonId, 
+			@EntityTableId = @EntityTableIdThing, 
+			@RelatedId = @ThingId, 
 			@UrlTypeId = @UrlTypeIdHome, 
 			@CompanyId = NULL, 
 			@UrlName = NULL, 
@@ -126,8 +132,8 @@ BEGIN TRY
 	IF @BlogUrl != '' BEGIN
 		EXEC ##InsertUrl 
 			@Url = @BlogUrl, 
-			@EntityTableId = @EntityTablePersonId, 
-			@RelatedId = @PersonId, 
+			@EntityTableId = @EntityTableIdThing, 
+			@RelatedId = @ThingId, 
 			@UrlTypeId = @UrlTypeIdBlog, 
 			@CompanyId = NULL, 
 			@UrlName = NULL, 
@@ -137,8 +143,8 @@ BEGIN TRY
 	IF @TwitterUrl != '' BEGIN
 		EXEC ##InsertUrl 
 			@Url = @TwitterUrl, 
-			@EntityTableId = @EntityTablePersonId, 
-			@RelatedId = @PersonId, 
+			@EntityTableId = @EntityTableIdThing, 
+			@RelatedId = @ThingId, 
 			@UrlTypeId = @UrlTypeIdSocial, 
 			@CompanyId = @CompanyIdTwitter, 
 			@UrlName = NULL, 
@@ -148,8 +154,8 @@ BEGIN TRY
 	IF @GitHubUrl != '' BEGIN
 		EXEC ##InsertUrl 
 			@Url = @GitHubUrl, 
-			@EntityTableId = @EntityTablePersonId, 
-			@RelatedId = @PersonId, 
+			@EntityTableId = @EntityTableIdThing, 
+			@RelatedId = @ThingId, 
 			@UrlTypeId = @UrlTypeIdSocial, 
 			@CompanyId = @CompanyIdGitHub, 
 			@UrlName = NULL, 
@@ -159,8 +165,8 @@ BEGIN TRY
 	IF @LinkedInUrl != '' BEGIN
 		EXEC ##InsertUrl 
 			@Url = @LinkedInUrl, 
-			@EntityTableId = @EntityTablePersonId, 
-			@RelatedId = @PersonId, 
+			@EntityTableId = @EntityTableIdThing, 
+			@RelatedId = @ThingId, 
 			@UrlTypeId = @UrlTypeIdSocial, 
 			@CompanyId = @CompanyIdLinkedIn, 
 			@UrlName = NULL, 
@@ -170,8 +176,8 @@ BEGIN TRY
 	IF @YouTubeUrl != '' BEGIN
 		EXEC ##InsertUrl 
 			@Url = @YouTubeUrl, 
-			@EntityTableId = @EntityTablePersonId, 
-			@RelatedId = @PersonId, 
+			@EntityTableId = @EntityTableIdThing, 
+			@RelatedId = @ThingId, 
 			@UrlTypeId = @UrlTypeIdSocial, 
 			@CompanyId = @CompanyIdYouTube, 
 			@UrlName = NULL, 
@@ -181,8 +187,8 @@ BEGIN TRY
 	IF @GooglePlusUrl != '' BEGIN
 		EXEC ##InsertUrl 
 			@Url = @GooglePlusUrl, 
-			@EntityTableId = @EntityTablePersonId, 
-			@RelatedId = @PersonId, 
+			@EntityTableId = @EntityTableIdThing, 
+			@RelatedId = @ThingId, 
 			@UrlTypeId = @UrlTypeIdSocial, 
 			@CompanyId = @CompanyIdGooglePlus, 
 			@UrlName = NULL, 
@@ -192,8 +198,8 @@ BEGIN TRY
 	IF @InstagramUrl != '' BEGIN
 		EXEC ##InsertUrl 
 			@Url = @InstagramUrl, 
-			@EntityTableId = @EntityTablePersonId, 
-			@RelatedId = @PersonId, 
+			@EntityTableId = @EntityTableIdThing, 
+			@RelatedId = @ThingId, 
 			@UrlTypeId = @UrlTypeIdSocial, 
 			@CompanyId = @CompanyIdInstagram, 
 			@UrlName = NULL, 
@@ -203,8 +209,8 @@ BEGIN TRY
 	IF @FaceBookUrl != '' BEGIN
 		EXEC ##InsertUrl 
 			@Url = @FaceBookUrl, 
-			@EntityTableId = @EntityTablePersonId, 
-			@RelatedId = @PersonId, 
+			@EntityTableId = @EntityTableIdThing, 
+			@RelatedId = @ThingId, 
 			@UrlTypeId = @UrlTypeIdSocial, 
 			@CompanyId = @CompanyIdFacebook, 
 			@UrlName = NULL, 
@@ -214,8 +220,8 @@ BEGIN TRY
 	IF @StackOverflowUrl != '' BEGIN
 		EXEC ##InsertUrl 
 			@Url = @StackOverflowUrl, 
-			@EntityTableId = @EntityTablePersonId, 
-			@RelatedId = @PersonId, 
+			@EntityTableId = @EntityTableIdThing, 
+			@RelatedId = @ThingId, 
 			@UrlTypeId = @UrlTypeIdSocial, 
 			@CompanyId = @CompanyIdStackOverflow, 
 			@UrlName = NULL, 
@@ -225,8 +231,8 @@ BEGIN TRY
 	IF @MediumUrl != '' BEGIN
 		EXEC ##InsertUrl 
 			@Url = @MediumUrl, 
-			@EntityTableId = @EntityTablePersonId, 
-			@RelatedId = @PersonId, 
+			@EntityTableId = @EntityTableIdThing, 
+			@RelatedId = @ThingId, 
 			@UrlTypeId = @UrlTypeIdSocial, 
 			@CompanyId = @CompanyIdMedium, 
 			@UrlName = NULL, 
@@ -236,8 +242,8 @@ BEGIN TRY
 	IF @PluralsightUrl != '' BEGIN
 		EXEC ##InsertUrl 
 			@Url = @PluralsightUrl, 
-			@EntityTableId = @EntityTablePersonId, 
-			@RelatedId = @PersonId, 
+			@EntityTableId = @EntityTableIdThing, 
+			@RelatedId = @ThingId, 
 			@UrlTypeId = @UrlTypeIdOther, 
 			@CompanyId = @CompanyIdPluralsight, 
 			@UrlName = NULL, 
@@ -256,14 +262,10 @@ END CATCH
 
 SET NOCOUNT OFF
 
-SELECT person.* 
-FROM person 
-WHERE person_id = @PersonId
-
 /*
 SELECT TOP 10 * FROM unique_name ORDER BY 1 DESC
-SELECT TOP 10 * FROM person ORDER BY 1 DESC
-SELECT TOP 10 * FROM entity_list ORDER BY 1 DESC -- person_type
+SELECT TOP 10 * FROM thing ORDER BY 1 DESC
+SELECT TOP 10 * FROM entity_list WHERE entity_table_id = 50001 ORDER BY 1 DESC -- related thing_type
 SELECT TOP 10 * FROM name ORDER BY 1 DESC
 SELECT TOP 10 * FROM name_data ORDER BY 1 DESC
 SELECT TOP 10 * FROM url ORDER BY 1 DESC
@@ -285,14 +287,19 @@ VALUES (170396, 1, 77078, 1001, 2001, 9999)
 */
 
 /* Empty Parameters
-DECLARE @FullName1 VARCHAR(255) = 'FIRST LAST',
-		@Alphabetic1 VARCHAR(255) = 'LAST, FIRST',
-		@FullNameOther VARCHAR(255) = '',
-		@AlphabeticOther VARCHAR(255) = '',
-		@FirstName VARCHAR(60) = 'FIRST',
-		@LastName VARCHAR(60) = 'LAST',
-		@MiddleName VARCHAR(60) = '',
-		@UniqueAdd VARCHAR(60) = NULL, -- person.unique_add
+DECLARE @StandardName VARCHAR(255) = '',
+		@StandardAlphabetic VARCHAR(255) = '',
+		--@Wikipedia VARCHAR(75) = '',
+		--@DataDate VARCHAR(50) = '',
+		--@DataType VARCHAR(50) = '',
+		@OtherName1 VARCHAR(255) = '',
+		@OtherAlphabetic1 VARCHAR(255) = '',
+		@OtherName2 VARCHAR(255) = '',
+		@OtherAlphabetic2 VARCHAR(255) = '',
+		@OtherName3 VARCHAR(255) = '',
+		@OtherAlphabetic3 VARCHAR(255) = '',
+		@OtherName4 VARCHAR(255) = '',
+		@OtherAlphabetic4 VARCHAR(255) = '',
 		@HomeUrl VARCHAR(255) = '',
 		@BlogUrl VARCHAR(255) = '',
 		@TwitterUrl VARCHAR(255) = '',
