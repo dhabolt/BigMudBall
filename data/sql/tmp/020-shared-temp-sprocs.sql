@@ -15,8 +15,8 @@ CREATE PROCEDURE ##InsertName (
 	@Name VARCHAR(255),
 	@Alphabetic VARCHAR(255),
 	@Wikipedia VARCHAR(75) = NULL,
-	@DataDate VARCHAR(50) = '????',
-	@DataType VARCHAR(50) = 'Technology',
+	@DataDate VARCHAR(50) = NULL,
+	@DataType VARCHAR(50) = NULL,
 	@NameType VARCHAR(20),
 	@EntityTableId INT,
 	@RelatedId INT,
@@ -33,6 +33,9 @@ CREATE PROCEDURE ##InsertName (
 
 	-- Variables
 	DECLARE @UniqueNameId INT, @NameId INT, @NameDataId INT, @FullName VARCHAR(255), @FullAlphabetic VARCHAR(255)
+
+	IF @DataDate IS NULL SET @DataDate = @DataMissing
+	IF @DataType IS NULL SET @DataType = @Technology
 
 	SELECT @UniqueNameId = un.unique_name_id, @FullName = un.unique_name, @FullAlphabetic = un.alphabetic FROM unique_name un WHERE un.unique_name = @Name
 	IF @UniqueNameId IS NULL BEGIN
@@ -86,5 +89,84 @@ CREATE PROCEDURE ##InsertUrl (
 			VALUES (@Url, @EntityTableId, @RelatedId, @UrlTypeId, @CompanyId, @UrlName, @SortOrder, 1)
 		END
 	END
+END
+GO
+
+
+if object_id('tempdb..##InsertBookNumber') IS NOT NULL
+begin
+    drop procedure ##InsertBookNumber
+    if object_id('tempdb..##InsertBookNumber') is not null
+        print '<<< failed dropping procedure ##InsertBookNumber >>>'
+    else
+        print '<<< dropped procedure ##InsertBookNumber >>>'
+end
+go
+
+CREATE PROCEDURE ##InsertBookNumber (
+	@Isbn VARCHAR(255),
+	@Isbn10 VARCHAR(255),
+	@BookId INT,
+	@BookNumberTypeId INT,
+	@BookNumberSubtypeId INT,
+	@PublicationDate DATETIME = NULL,
+	@DateAccuracyId INT = NULL
+) AS BEGIN
+
+	-- Constants
+	DECLARE @DateAccuracyIdUnknown INT = 150494
+
+	IF @DateAccuracyId IS NULL SET @DateAccuracyId = @DateAccuracyIdUnknown
+
+	IF @Isbn IS NOT NULL BEGIN
+		IF NOT EXISTS (SELECT * FROM book_number WHERE book_id = @BookId AND book_number_subtype_id = @BookNumberSubtypeId) BEGIN
+			INSERT INTO book_number (book_id, book_number_type_id, isbn13, book_number, book_number_subtype_id, publication_date, date_accuracy_id)
+			VALUES (@BookId, @BookNumberTypeId, @Isbn, @Isbn10, @BookNumberSubtypeId, @PublicationDate, @DateAccuracyIdUnknown)
+		END
+	END
+END
+GO
+
+if object_id('tempdb..##InsertNote') IS NOT NULL
+begin
+    drop procedure ##InsertNote
+    if object_id('tempdb..##InsertNote') is not null
+        print '<<< failed dropping procedure ##InsertNote >>>'
+    else
+        print '<<< dropped procedure ##InsertNote >>>'
+end
+go
+
+CREATE PROCEDURE ##InsertNote (
+	@DailyDate VARCHAR(20),
+	@EntityTableID INT,
+	@RelatedId INT, 
+	@NoteTypeId INT,
+	@CompanyId INT = NULL,
+	@Name VARCHAR(255) = NULL,
+	@Note VARCHAR(4000) = NULL, 
+	@SortOrder INT
+) AS BEGIN
+
+	-- Constants
+	DECLARE @DateAccuracyIdUnknown INT = 150494
+	DECLARE @NoteTypeIdDescription INT = 151035, @NoteTypeIdImage INT = 151031, @NoteTypeIdTwitterImageTags INT = 151038, @NoteTypeIdTwitter INT = 151037, @NoteTypeIdTweet INT = 151039, @NoteTypeIdBrief INT = 151036
+
+	IF @Name IS NULL BEGIN
+		SELECT @Name = CASE
+			WHEN @NoteTypeId = @NoteTypeIdDescription THEN 'Publisher''s Description'
+			WHEN @NoteTypeId = @NoteTypeIdImage THEN 'Book Image'
+			WHEN @NoteTypeId = @NoteTypeIdTwitterImageTags THEN 'Twitter Image Tags'
+			WHEN @NoteTypeId = @NoteTypeIdTwitter THEN 'Twitter ' + @DailyDate
+			WHEN @NoteTypeId = @NoteTypeIdTweet THEN 'Tweet ' + @DailyDate
+			WHEN @NoteTypeId = @NoteTypeIdBrief THEN 'Brief'
+		END
+	END
+
+	IF NOT EXISTS (SELECT * FROM note WHERE note.entity_table_id = @EntityTableID AND note.related_id = @RelatedId AND note.type_id = @NoteTypeId) BEGIN
+		INSERT INTO note (entity_table_id, related_id, type_id, company_id, note, sort_order, name)
+		VALUES (@EntityTableID, @RelatedId, @NoteTypeId, @CompanyId, @Note, @SortOrder, @Name)
+	END
+
 END
 GO
