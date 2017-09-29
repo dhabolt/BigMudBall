@@ -36,6 +36,7 @@ CREATE PROCEDURE ##InsertName (
 
 	IF @DataDate IS NULL SET @DataDate = @DataMissing
 	IF @DataType IS NULL SET @DataType = @Technology
+	IF @Wikipedia IS NULL SET @Wikipedia = @DataMissing
 
 	SELECT @UniqueNameId = un.unique_name_id, @FullName = un.unique_name, @FullAlphabetic = un.alphabetic FROM unique_name un WHERE un.unique_name = @Name
 	IF @UniqueNameId IS NULL BEGIN
@@ -118,7 +119,7 @@ CREATE PROCEDURE ##InsertBookNumber (
 
 	IF @DateAccuracyId IS NULL SET @DateAccuracyId = @DateAccuracyIdUnknown
 
-	IF @Isbn IS NOT NULL BEGIN
+	IF @Isbn IS NOT NULL AND @Isbn != 'NULL' BEGIN
 		IF NOT EXISTS (SELECT * FROM book_number WHERE book_id = @BookId AND book_number_subtype_id = @BookNumberSubtypeId) BEGIN
 			INSERT INTO book_number (book_id, book_number_type_id, isbn13, book_number, book_number_subtype_id, publication_date, date_accuracy_id)
 			VALUES (@BookId, @BookNumberTypeId, @Isbn, @Isbn10, @BookNumberSubtypeId, @PublicationDate, @DateAccuracyIdUnknown)

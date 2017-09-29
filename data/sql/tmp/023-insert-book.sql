@@ -1,28 +1,29 @@
 USE illustrated2
 GO
 
-DECLARE @StandardName VARCHAR(255) = 'ASP.NET Core Identity Management Playbook',
-		@StandardAlphabetic VARCHAR(255) = 'ASP.NET Core Identity Management Playbook',
-		@DailyDate VARCHAR(20) = '2017.09.28',
-		@EntityType VARCHAR(10) = 'Video',
-		@IsbnPaperback VARCHAR(30) = NULL,
-		@IsbnPaperback10 VARCHAR(30) = NULL,
-		@IsbnDigital VARCHAR(30) = NULL,
-		@IsbnDigital10 VARCHAR(30) = NULL,
-		@Subtitle VARCHAR(255) = NULL,
+DECLARE @StandardName VARCHAR(255) = 'TITLE',
+		@StandardAlphabetic VARCHAR(255) = 'TITLE',
+		@DailyDate VARCHAR(20) = '2017.09.29',
+		@EntityType VARCHAR(10) = 'Book',
+		@IsbnPaperback VARCHAR(30) = 'NULL',
+		@IsbnPaperback10 VARCHAR(30) = 'NULL',
+		@IsbnDigital VARCHAR(30) = 'NULL',
+		@IsbnDigital10 VARCHAR(30) = 'NULL',
+		@HomeUrl VARCHAR(255) = '',
+		@AmazonUrl VARCHAR(255) = '',
 		@NumberPages INT = 0,
-		@DatePublished DATETIME = '9/27/2017',
+		@DatePublished DATETIME = '',
+		@DataDate VARCHAR(50) = '',
+		@Subtitle VARCHAR(255) = NULL,
 		@Wikipedia VARCHAR(75) = NULL,
-		@DataDate VARCHAR(50) = '2017',
-		@DataType VARCHAR(50) = 'ASP.NET Core',
+		@DataType VARCHAR(50) = 'zzz',
 		@OtherName1 VARCHAR(255) = '',
 		@OtherAlphabetic1 VARCHAR(255) = '',
 		@OtherName2 VARCHAR(255) = '',
 		@OtherAlphabetic2 VARCHAR(255) = '',
 		@OtherName3 VARCHAR(255) = '',
-		@OtherAlphabetic3 VARCHAR(255) = '',
-		@HomeUrl VARCHAR(255) = 'https://pluralsight.com/courses/aspnet-core-identity-management-playbook',
-		@AmazonUrl VARCHAR(255) = ''
+		@OtherAlphabetic3 VARCHAR(255) = ''
+
 
 -- Constants
 DECLARE @EntityTableIdBook INT = 8
@@ -242,30 +243,28 @@ VALUES (170396, 1, 77078, 1001, 2001, 9999)
 */
 
 /* Empty Parameters
-DECLARE @StandardName VARCHAR(255) = '',
-		@StandardAlphabetic VARCHAR(255) = '',
-		--@Wikipedia VARCHAR(75) = '',
-		--@DataDate VARCHAR(50) = '',
-		--@DataType VARCHAR(50) = '',
+DECLARE @StandardName VARCHAR(255) = 'TITLE',
+		@StandardAlphabetic VARCHAR(255) = 'TITLE',
+		@DailyDate VARCHAR(20) = '2017.09.29',
+		@EntityType VARCHAR(10) = 'Book',
+		@IsbnPaperback VARCHAR(30) = 'NULL',
+		@IsbnPaperback10 VARCHAR(30) = 'NULL',
+		@IsbnDigital VARCHAR(30) = 'NULL',
+		@IsbnDigital10 VARCHAR(30) = 'NULL',
+		@HomeUrl VARCHAR(255) = '',
+		@AmazonUrl VARCHAR(255) = '',
+		@NumberPages INT = 0,
+		@DatePublished DATETIME = '',
+		@DataDate VARCHAR(50) = '',
+		@Subtitle VARCHAR(255) = NULL,
+		@Wikipedia VARCHAR(75) = NULL,
+		@DataType VARCHAR(50) = 'zzz',
 		@OtherName1 VARCHAR(255) = '',
 		@OtherAlphabetic1 VARCHAR(255) = '',
 		@OtherName2 VARCHAR(255) = '',
 		@OtherAlphabetic2 VARCHAR(255) = '',
 		@OtherName3 VARCHAR(255) = '',
-		@OtherAlphabetic3 VARCHAR(255) = '',
-		@OtherName4 VARCHAR(255) = '',
-		@OtherAlphabetic4 VARCHAR(255) = '',
-		@HomeUrl VARCHAR(255) = '',
-		@BlogUrl VARCHAR(255) = '',
-		@TwitterUrl VARCHAR(255) = '',
-		@GitHubUrl VARCHAR(255) = '',
-		@LinkedInUrl VARCHAR(255) = '',
-		@YouTubeUrl VARCHAR(255) = '',
-		@GooglePlusUrl VARCHAR(255) = '',
-		@InstagramUrl VARCHAR(255) = '',
-		@FaceBookUrl VARCHAR(255) = '',
-		@StackOverflowUrl VARCHAR(255) = '',
-		@MediumUrl VARCHAR(255) = '',
-		@PluralsightUrl VARCHAR(255) = ''
+		@OtherAlphabetic3 VARCHAR(255) = ''
+
 
 */
