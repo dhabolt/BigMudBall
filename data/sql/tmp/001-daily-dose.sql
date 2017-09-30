@@ -2,9 +2,9 @@ USE illustrated2
 /* CREATE TYPE Identifiers AS TABLE(Id INT NOT NULL PRIMARY KEY) */
 GO
 
-DECLARE @BookId INT = 50444, 
-		@DealDate VARCHAR(10) = '9/29',
-		@DailyDoseLink VARCHAR(200) = '/daily/2017/09/29/',
+DECLARE @BookId INT = 50450, 
+		@DealDate VARCHAR(10) = '9/30',
+		@DailyDoseLink VARCHAR(200) = '/daily/2017/09/30/',
 		@IsPackt INT = 0, 
 		@IsManning INT = 1, 
 		@IsApress INT = 0, 
@@ -18,7 +18,7 @@ DECLARE @BookId INT = 50444,
 		@NewIncremental VARCHAR(2) = '3',
 		@ThingIds AS Identifiers,
 		@InformItDeal VARCHAR(20) = '45% off'
-INSERT @ThingIds(Id) VALUES (50441),(50442),(50398),(50443),(50444)
+INSERT @ThingIds(Id) VALUES (0),(-1),(-2),(-3),(-4),(-5),(-6),(-7),(-8),(-9),(-10)
 
 -- ENTITY CONSTANTS
 DECLARE @BookEntityId INT = 8, @PersonEntityId INT = 1, @ThingEntityId INT = 50001

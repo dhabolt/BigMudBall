@@ -34,9 +34,9 @@ CREATE PROCEDURE ##InsertName (
 	-- Variables
 	DECLARE @UniqueNameId INT, @NameId INT, @NameDataId INT, @FullName VARCHAR(255), @FullAlphabetic VARCHAR(255)
 
-	IF @DataDate IS NULL SET @DataDate = @DataMissing
-	IF @DataType IS NULL SET @DataType = @Technology
-	IF @Wikipedia IS NULL SET @Wikipedia = @DataMissing
+	IF @DataDate IS NULL OR @DataDate = '' SET @DataDate = @DataMissing
+	IF @DataType IS NULL OR @DataType = '' SET @DataType = @Technology
+	IF @Wikipedia IS NULL OR @Wikipedia = '' SET @Wikipedia = @DataMissing
 
 	SELECT @UniqueNameId = un.unique_name_id, @FullName = un.unique_name, @FullAlphabetic = un.alphabetic FROM unique_name un WHERE un.unique_name = @Name
 	IF @UniqueNameId IS NULL BEGIN

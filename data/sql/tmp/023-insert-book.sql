@@ -3,7 +3,7 @@ GO
 
 DECLARE @StandardName VARCHAR(255) = 'TITLE',
 		@StandardAlphabetic VARCHAR(255) = 'TITLE',
-		@DailyDate VARCHAR(20) = '2017.09.29',
+		@DailyDate VARCHAR(20) = '2017.09.30',
 		@EntityType VARCHAR(10) = 'Book',
 		@IsbnPaperback VARCHAR(30) = 'NULL',
 		@IsbnPaperback10 VARCHAR(30) = 'NULL',
@@ -14,9 +14,9 @@ DECLARE @StandardName VARCHAR(255) = 'TITLE',
 		@NumberPages INT = 0,
 		@DatePublished DATETIME = '',
 		@DataDate VARCHAR(50) = '',
+		@DataType VARCHAR(50) = '',
 		@Subtitle VARCHAR(255) = NULL,
-		@Wikipedia VARCHAR(75) = NULL,
-		@DataType VARCHAR(50) = 'zzz',
+		@Wikipedia VARCHAR(75) = '',
 		@OtherName1 VARCHAR(255) = '',
 		@OtherAlphabetic1 VARCHAR(255) = '',
 		@OtherName2 VARCHAR(255) = '',
@@ -72,7 +72,9 @@ BEGIN TRY
 			@RelatedId = @BookId, 
 			@NameTypeId = @NameTypeIdFull, 
 			@NameSubtypeId = @NameSubtypeIdStandard, 
-			@SortOrder = @DisplayOrderDefault
+			@SortOrder = @DisplayOrderDefault,
+			@DataDate = @DataDate,
+			@DataType = @DataType
 	END
 
 	IF @OtherName1 != '' BEGIN
@@ -245,7 +247,7 @@ VALUES (170396, 1, 77078, 1001, 2001, 9999)
 /* Empty Parameters
 DECLARE @StandardName VARCHAR(255) = 'TITLE',
 		@StandardAlphabetic VARCHAR(255) = 'TITLE',
-		@DailyDate VARCHAR(20) = '2017.09.29',
+		@DailyDate VARCHAR(20) = '2017.09.30',
 		@EntityType VARCHAR(10) = 'Book',
 		@IsbnPaperback VARCHAR(30) = 'NULL',
 		@IsbnPaperback10 VARCHAR(30) = 'NULL',
@@ -256,9 +258,9 @@ DECLARE @StandardName VARCHAR(255) = 'TITLE',
 		@NumberPages INT = 0,
 		@DatePublished DATETIME = '',
 		@DataDate VARCHAR(50) = '',
+		@DataType VARCHAR(50) = '',
 		@Subtitle VARCHAR(255) = NULL,
-		@Wikipedia VARCHAR(75) = NULL,
-		@DataType VARCHAR(50) = 'zzz',
+		@Wikipedia VARCHAR(75) = '',
 		@OtherName1 VARCHAR(255) = '',
 		@OtherAlphabetic1 VARCHAR(255) = '',
 		@OtherName2 VARCHAR(255) = '',

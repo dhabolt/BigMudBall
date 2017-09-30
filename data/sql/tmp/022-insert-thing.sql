@@ -3,9 +3,9 @@ GO
 
 DECLARE @StandardName VARCHAR(255) = '',
 		@StandardAlphabetic VARCHAR(255) = '',
-		@Wikipedia VARCHAR(75) = NULL,
-		@DataDate VARCHAR(50) = NULL,
-		@DataType VARCHAR(50) = NULL,
+		@Wikipedia VARCHAR(75) = '',
+		@DataDate VARCHAR(50) = '',
+		@DataType VARCHAR(50) = '',
 		@OtherName1 VARCHAR(255) = '',
 		@OtherAlphabetic1 VARCHAR(255) = '',
 		@OtherName2 VARCHAR(255) = '',
@@ -16,6 +16,7 @@ DECLARE @StandardName VARCHAR(255) = '',
 		@OtherAlphabetic4 VARCHAR(255) = '',
 		@HomeUrl VARCHAR(255) = '',
 		@BlogUrl VARCHAR(255) = '',
+		@DocumentationUrl VARCHAR(255) = '',
 		@TwitterUrl VARCHAR(255) = '',
 		@GitHubUrl VARCHAR(255) = '',
 		@LinkedInUrl VARCHAR(255) = '',
@@ -140,6 +141,17 @@ BEGIN TRY
 			@CompanyId = NULL, 
 			@UrlName = NULL, 
 			@SortOrder = 2
+	END
+
+	IF @DocumentationUrl != '' BEGIN
+		EXEC ##InsertUrl 
+			@Url = @DocumentationUrl, 
+			@EntityTableId = @EntityTableIdThing, 
+			@RelatedId = @ThingId, 
+			@UrlTypeId = @UrlTypeIdOther, 
+			@CompanyId = NULL, 
+			@UrlName = 'Documentation', 
+			@SortOrder = 3
 	END
 
 	IF @TwitterUrl != '' BEGIN
@@ -291,9 +303,9 @@ VALUES (170396, 1, 77078, 1001, 2001, 9999)
 /* Empty Parameters
 DECLARE @StandardName VARCHAR(255) = '',
 		@StandardAlphabetic VARCHAR(255) = '',
-		@Wikipedia VARCHAR(75) = NULL,
-		@DataDate VARCHAR(50) = NULL,
-		@DataType VARCHAR(50) = NULL,
+		@Wikipedia VARCHAR(75) = '',
+		@DataDate VARCHAR(50) = '',
+		@DataType VARCHAR(50) = '',
 		@OtherName1 VARCHAR(255) = '',
 		@OtherAlphabetic1 VARCHAR(255) = '',
 		@OtherName2 VARCHAR(255) = '',
@@ -304,6 +316,7 @@ DECLARE @StandardName VARCHAR(255) = '',
 		@OtherAlphabetic4 VARCHAR(255) = '',
 		@HomeUrl VARCHAR(255) = '',
 		@BlogUrl VARCHAR(255) = '',
+		@DocumentationUrl VARCHAR(255) = '',
 		@TwitterUrl VARCHAR(255) = '',
 		@GitHubUrl VARCHAR(255) = '',
 		@LinkedInUrl VARCHAR(255) = '',
