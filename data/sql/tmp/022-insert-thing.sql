@@ -1,19 +1,15 @@
 USE illustrated2
 GO
 
-DECLARE @StandardName VARCHAR(255) = '',
-		@StandardAlphabetic VARCHAR(255) = '',
+DECLARE @StandardName VARCHAR(255) = '', @StandardAlphabetic VARCHAR(255) = '',
 		@Wikipedia VARCHAR(75) = '',
 		@DataDate VARCHAR(50) = '',
 		@DataType VARCHAR(50) = '',
-		@OtherName1 VARCHAR(255) = '',
-		@OtherAlphabetic1 VARCHAR(255) = '',
-		@OtherName2 VARCHAR(255) = '',
-		@OtherAlphabetic2 VARCHAR(255) = '',
-		@OtherName3 VARCHAR(255) = '',
-		@OtherAlphabetic3 VARCHAR(255) = '',
-		@OtherName4 VARCHAR(255) = '',
-		@OtherAlphabetic4 VARCHAR(255) = '',
+		@OtherName1 VARCHAR(255) = '', @OtherAlphabetic1 VARCHAR(255) = '',
+		@OtherName2 VARCHAR(255) = '', @OtherAlphabetic2 VARCHAR(255) = '',
+		@OtherName3 VARCHAR(255) = '', @OtherAlphabetic3 VARCHAR(255) = '',
+		@OtherName4 VARCHAR(255) = '', @OtherAlphabetic4 VARCHAR(255) = '',
+		@OtherName5 VARCHAR(255) = '', @OtherAlphabetic5 VARCHAR(255) = '',
 		@HomeUrl VARCHAR(255) = '',
 		@BlogUrl VARCHAR(255) = '',
 		@DocumentationUrl VARCHAR(255) = '',
@@ -114,6 +110,18 @@ BEGIN TRY
 			@Name = @OtherName4, 
 			@Alphabetic = @OtherAlphabetic4,
 			@NameType = 'OtherName4', 
+			@EntityTableId = @EntityTableIdThing, 
+			@RelatedId = @ThingId, 
+			@NameTypeId = @NameTypeIdFull, 
+			@NameSubtypeId = @NameSubtypeIdOther, 
+			@SortOrder = @DisplayOrderDefault
+	END
+
+	IF @OtherName5 != '' BEGIN
+		EXEC ##InsertName 
+			@Name = @OtherName5, 
+			@Alphabetic = @OtherAlphabetic5,
+			@NameType = 'OtherName5', 
 			@EntityTableId = @EntityTableIdThing, 
 			@RelatedId = @ThingId, 
 			@NameTypeId = @NameTypeIdFull, 
@@ -276,6 +284,8 @@ END CATCH
 
 SET NOCOUNT OFF
 
+SELECT * FROM thing WHERE thing_id = @ThingId
+
 /*
 SELECT TOP 10 * FROM unique_name ORDER BY 1 DESC
 SELECT TOP 10 * FROM thing ORDER BY 1 DESC
@@ -301,19 +311,15 @@ VALUES (170396, 1, 77078, 1001, 2001, 9999)
 */
 
 /* Empty Parameters
-DECLARE @StandardName VARCHAR(255) = '',
-		@StandardAlphabetic VARCHAR(255) = '',
+DECLARE @StandardName VARCHAR(255) = '', @StandardAlphabetic VARCHAR(255) = '',
 		@Wikipedia VARCHAR(75) = '',
 		@DataDate VARCHAR(50) = '',
 		@DataType VARCHAR(50) = '',
-		@OtherName1 VARCHAR(255) = '',
-		@OtherAlphabetic1 VARCHAR(255) = '',
-		@OtherName2 VARCHAR(255) = '',
-		@OtherAlphabetic2 VARCHAR(255) = '',
-		@OtherName3 VARCHAR(255) = '',
-		@OtherAlphabetic3 VARCHAR(255) = '',
-		@OtherName4 VARCHAR(255) = '',
-		@OtherAlphabetic4 VARCHAR(255) = '',
+		@OtherName1 VARCHAR(255) = '', @OtherAlphabetic1 VARCHAR(255) = '',
+		@OtherName2 VARCHAR(255) = '', @OtherAlphabetic2 VARCHAR(255) = '',
+		@OtherName3 VARCHAR(255) = '', @OtherAlphabetic3 VARCHAR(255) = '',
+		@OtherName4 VARCHAR(255) = '', @OtherAlphabetic4 VARCHAR(255) = '',
+		@OtherName5 VARCHAR(255) = '', @OtherAlphabetic5 VARCHAR(255) = '',
 		@HomeUrl VARCHAR(255) = '',
 		@BlogUrl VARCHAR(255) = '',
 		@DocumentationUrl VARCHAR(255) = '',

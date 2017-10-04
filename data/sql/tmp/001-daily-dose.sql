@@ -2,11 +2,11 @@ USE illustrated2
 /* CREATE TYPE Identifiers AS TABLE(Id INT NOT NULL PRIMARY KEY) */
 GO
 
-DECLARE @BookId INT = 50450, 
-		@DealDate VARCHAR(10) = '9/30',
-		@DailyDoseLink VARCHAR(200) = '/daily/2017/09/30/',
+DECLARE @BookId INT = 0, 
+		@DealDate VARCHAR(10) = null,
+		@DailyDoseLink VARCHAR(200) = null,
 		@IsPackt INT = 0, 
-		@IsManning INT = 1, 
+		@IsManning INT = 0, 
 		@IsApress INT = 0, 
 		@IsPluralsightFree INT = 0,
 		@IsInformIT INT = 0,
@@ -15,10 +15,12 @@ DECLARE @BookId INT = 50450,
 		@IsNewApress INT = 0,
 		@IsNewOReilly INT = 0,
 		@IsNewVideo INT = 0,
-		@NewIncremental VARCHAR(2) = '3',
+		@NewIncremental VARCHAR(2) = '1',
 		@ThingIds AS Identifiers,
-		@InformItDeal VARCHAR(20) = '45% off'
-INSERT @ThingIds(Id) VALUES (0),(-1),(-2),(-3),(-4),(-5),(-6),(-7),(-8),(-9),(-10)
+		@InformItDeal VARCHAR(20) = '50% off'
+INSERT @ThingIds(Id) VALUES (50471),(50472),(50447),(50452),(50436),(-5),(-6),(-7),(-8),(-9),(-10)
+
+SELECT @BookId = 50436, @IsManning = 1, @NewIncremental = '3', @InformItDeal = '', @DealDate = '10/04', @DailyDoseLink = '/daily/2017/10/04/'
 
 -- ENTITY CONSTANTS
 DECLARE @BookEntityId INT = 8, @PersonEntityId INT = 1, @ThingEntityId INT = 50001
@@ -53,7 +55,7 @@ END
 
 IF @IsInformIT = 1 BEGIN
 	SELECT @TitleUrl = @InformItAffiliatePrepend + @TitleUrl
-	SELECT @InformItDealsUrl = @InformItAffiliatePrepend + @TitleUrl
+	SELECT @InformItDealsUrl = @InformItAffiliatePrepend + @InformItDealsUrl
 END
 
 -- TODO: Add Editor and Technical Editor as postpends to Author (similar to Forwards below)

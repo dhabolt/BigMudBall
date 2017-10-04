@@ -1,28 +1,20 @@
 USE illustrated2
 GO
 
-DECLARE @StandardName VARCHAR(255) = 'TITLE',
-		@StandardAlphabetic VARCHAR(255) = 'TITLE',
-		@DailyDate VARCHAR(20) = '2017.09.30',
+DECLARE @StandardName VARCHAR(255) = 'TITLE', @StandardAlphabetic VARCHAR(255) = 'TITLE',
+		@DailyDate VARCHAR(20) = '2017.10.04',
 		@EntityType VARCHAR(10) = 'Book',
-		@IsbnPaperback VARCHAR(30) = 'NULL',
-		@IsbnPaperback10 VARCHAR(30) = 'NULL',
-		@IsbnDigital VARCHAR(30) = 'NULL',
-		@IsbnDigital10 VARCHAR(30) = 'NULL',
-		@HomeUrl VARCHAR(255) = '',
-		@AmazonUrl VARCHAR(255) = '',
+		@IsbnPaperback VARCHAR(30) = 'NULL', @IsbnPaperback10 VARCHAR(30) = 'NULL',
+		@IsbnDigital VARCHAR(30) = 'NULL', @IsbnDigital10 VARCHAR(30) = 'NULL',
+		@HomeUrl VARCHAR(255) = '', @AmazonUrl VARCHAR(255) = '',
 		@NumberPages INT = 0,
 		@DatePublished DATETIME = '',
-		@DataDate VARCHAR(50) = '',
-		@DataType VARCHAR(50) = '',
-		@Subtitle VARCHAR(255) = NULL,
+		@DataDate VARCHAR(50) = '', @DataType VARCHAR(50) = '',
+		@Subtitle VARCHAR(255) = '',
 		@Wikipedia VARCHAR(75) = '',
-		@OtherName1 VARCHAR(255) = '',
-		@OtherAlphabetic1 VARCHAR(255) = '',
-		@OtherName2 VARCHAR(255) = '',
-		@OtherAlphabetic2 VARCHAR(255) = '',
-		@OtherName3 VARCHAR(255) = '',
-		@OtherAlphabetic3 VARCHAR(255) = ''
+		@OtherName1 VARCHAR(255) = '', @OtherAlphabetic1 VARCHAR(255) = '',
+		@OtherName2 VARCHAR(255) = '', @OtherAlphabetic2 VARCHAR(255) = '',
+		@OtherName3 VARCHAR(255) = '', @OtherAlphabetic3 VARCHAR(255) = ''
 
 
 -- Constants
@@ -46,6 +38,7 @@ SET NOCOUNT ON
 
 SET @EntityTypeId = @EntityTypeIdBook
 IF @EntityType = 'Video' SET @EntityTypeId = @EntityTypeIdVideo
+IF @Subtitle = '' SET @Subtitle = NULL
 
 BEGIN TRANSACTION
 
@@ -218,6 +211,8 @@ END CATCH
 
 SET NOCOUNT OFF
 
+SELECT * FROM book WHERE name = @StandardName
+
 /*
 SELECT TOP 10 * FROM unique_name ORDER BY 1 DESC
 SELECT TOP 10 * FROM book ORDER BY 1 DESC
@@ -245,28 +240,20 @@ VALUES (170396, 1, 77078, 1001, 2001, 9999)
 */
 
 /* Empty Parameters
-DECLARE @StandardName VARCHAR(255) = 'TITLE',
-		@StandardAlphabetic VARCHAR(255) = 'TITLE',
-		@DailyDate VARCHAR(20) = '2017.09.30',
+DECLARE @StandardName VARCHAR(255) = 'TITLE', @StandardAlphabetic VARCHAR(255) = 'TITLE',
+		@DailyDate VARCHAR(20) = '2017.10.03',
 		@EntityType VARCHAR(10) = 'Book',
-		@IsbnPaperback VARCHAR(30) = 'NULL',
-		@IsbnPaperback10 VARCHAR(30) = 'NULL',
-		@IsbnDigital VARCHAR(30) = 'NULL',
-		@IsbnDigital10 VARCHAR(30) = 'NULL',
-		@HomeUrl VARCHAR(255) = '',
-		@AmazonUrl VARCHAR(255) = '',
+		@IsbnPaperback VARCHAR(30) = 'NULL', @IsbnPaperback10 VARCHAR(30) = 'NULL',
+		@IsbnDigital VARCHAR(30) = 'NULL', @IsbnDigital10 VARCHAR(30) = 'NULL',
+		@HomeUrl VARCHAR(255) = '', @AmazonUrl VARCHAR(255) = '',
 		@NumberPages INT = 0,
 		@DatePublished DATETIME = '',
-		@DataDate VARCHAR(50) = '',
-		@DataType VARCHAR(50) = '',
-		@Subtitle VARCHAR(255) = NULL,
+		@DataDate VARCHAR(50) = '', @DataType VARCHAR(50) = '',
+		@Subtitle VARCHAR(255) = '',
 		@Wikipedia VARCHAR(75) = '',
-		@OtherName1 VARCHAR(255) = '',
-		@OtherAlphabetic1 VARCHAR(255) = '',
-		@OtherName2 VARCHAR(255) = '',
-		@OtherAlphabetic2 VARCHAR(255) = '',
-		@OtherName3 VARCHAR(255) = '',
-		@OtherAlphabetic3 VARCHAR(255) = ''
+		@OtherName1 VARCHAR(255) = '', @OtherAlphabetic1 VARCHAR(255) = '',
+		@OtherName2 VARCHAR(255) = '', @OtherAlphabetic2 VARCHAR(255) = '',
+		@OtherName3 VARCHAR(255) = '', @OtherAlphabetic3 VARCHAR(255) = ''
 
 
 */

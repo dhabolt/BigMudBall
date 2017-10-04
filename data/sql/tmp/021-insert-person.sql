@@ -3,11 +3,10 @@ GO
 
 DECLARE @FullName1 VARCHAR(255) = 'FIRST LAST',
 		@Alphabetic1 VARCHAR(255) = 'LAST, FIRST',
-		@FullNameOther VARCHAR(255) = '',
-		@AlphabeticOther VARCHAR(255) = '',
-		@FirstName VARCHAR(60) = 'FIRST',
-		@LastName VARCHAR(60) = 'LAST',
-		@MiddleName VARCHAR(60) = '',
+		@FullNameOther VARCHAR(255) = '', @AlphabeticOther VARCHAR(255) = '',
+		@FullNameOther2 VARCHAR(255) = '', @AlphabeticOther2 VARCHAR(255) = '',
+		@FullNameOther3 VARCHAR(255) = '', @AlphabeticOther3 VARCHAR(255) = '',
+		@FirstName VARCHAR(60) = 'FIRST', @LastName VARCHAR(60) = 'LAST', @MiddleName VARCHAR(60) = '',
 		@UniqueAdd VARCHAR(60) = NULL, -- person.unique_add
 		@HomeUrl VARCHAR(255) = '',
 		@BlogUrl VARCHAR(255) = '',
@@ -18,9 +17,12 @@ DECLARE @FullName1 VARCHAR(255) = 'FIRST LAST',
 		@GooglePlusUrl VARCHAR(255) = '',
 		@InstagramUrl VARCHAR(255) = '',
 		@FaceBookUrl VARCHAR(255) = '',
+		@FlickrUrl VARCHAR(255) = '',
+		@PinterestUrl VARCHAR(255) = '',
 		@StackOverflowUrl VARCHAR(255) = '',
 		@MediumUrl VARCHAR(255) = '',
-		@PluralsightUrl VARCHAR(255) = ''
+		@PluralsightUrl VARCHAR(255) = '',
+		@SlideShareUrl VARCHAR(255) = ''
 
 -- Constants
 DECLARE @EntityTablePersonId INT = 1
@@ -32,6 +34,7 @@ DECLARE @DisplayOrderDefault INT = 9999, @DataMissing VARCHAR(20) = '????', @Tec
 DECLARE @UrlTypeIdHome INT = 28004, @UrlTypeIdSocial INT = 150715, @UrlTypeIdOther INT = 28005, @UrlTypeIdBlog INT = 28010
 DECLARE @CompanyIdTwitter INT = 51528, @CompanyIdGitHub INT = 51757, @CompanyIdLinkedIn INT = 51541, @CompanyIdFacebook INT = 51304, @CompanyIdPluralsight INT = 51768
 DECLARE @CompanyIdYouTube INT = 51099, @CompanyIdMedium INT = 51762, @CompanyIdGooglePlus INT = 51765, @CompanyIdInstagram INT = 51755, @CompanyIdStackOverflow INT = 51773
+DECLARE @CompanyIdFlickr INT = 51545, @CompanyIdPinterest INT = 51759, @CompanyIdSlideShare INT = 51764
 
 -- Variables
 DECLARE @UniqueNameId INT, @NameId INT, @PersonId INT, @FullName VARCHAR(255), @FullAlphabetic VARCHAR(255)
@@ -69,6 +72,30 @@ BEGIN TRY
 			@Name = @FullNameOther, 
 			@Alphabetic = @AlphabeticOther,
 			@NameType = 'FullNameOther', 
+			@NameTypeId = @NameTypeFullId, 
+			@NameSubtypeId = @NameSubtypeOtherId, 
+			@EntityTableId = @EntityTablePersonId, 
+			@RelatedId = @PersonId, 
+			@SortOrder = @DisplayOrderDefault
+	END
+
+	IF @FullNameOther2 != '' BEGIN
+		EXEC ##InsertName 
+			@Name = @FullNameOther2, 
+			@Alphabetic = @AlphabeticOther2,
+			@NameType = 'FullNameOther2', 
+			@NameTypeId = @NameTypeFullId, 
+			@NameSubtypeId = @NameSubtypeOtherId, 
+			@EntityTableId = @EntityTablePersonId, 
+			@RelatedId = @PersonId, 
+			@SortOrder = @DisplayOrderDefault
+	END
+
+	IF @FullNameOther3 != '' BEGIN
+		EXEC ##InsertName 
+			@Name = @FullNameOther3, 
+			@Alphabetic = @AlphabeticOther3,
+			@NameType = 'FullNameOther3', 
 			@NameTypeId = @NameTypeFullId, 
 			@NameSubtypeId = @NameSubtypeOtherId, 
 			@EntityTableId = @EntityTablePersonId, 
@@ -211,6 +238,28 @@ BEGIN TRY
 			@SortOrder = 16
 	END
 
+	IF @FlickrUrl != '' BEGIN
+		EXEC ##InsertUrl 
+			@Url = @FlickrUrl, 
+			@EntityTableId = @EntityTablePersonId, 
+			@RelatedId = @PersonId, 
+			@UrlTypeId = @UrlTypeIdSocial, 
+			@CompanyId = @CompanyIdFlickr, 
+			@UrlName = NULL, 
+			@SortOrder = 17
+	END
+
+	IF @PinterestUrl != '' BEGIN
+		EXEC ##InsertUrl 
+			@Url = @PinterestUrl, 
+			@EntityTableId = @EntityTablePersonId, 
+			@RelatedId = @PersonId, 
+			@UrlTypeId = @UrlTypeIdSocial, 
+			@CompanyId = @CompanyIdPinterest, 
+			@UrlName = NULL, 
+			@SortOrder = 18
+	END
+
 	IF @StackOverflowUrl != '' BEGIN
 		EXEC ##InsertUrl 
 			@Url = @StackOverflowUrl, 
@@ -242,6 +291,17 @@ BEGIN TRY
 			@CompanyId = @CompanyIdPluralsight, 
 			@UrlName = NULL, 
 			@SortOrder = 22
+	END
+
+	IF @SlideShareUrl != '' BEGIN
+		EXEC ##InsertUrl 
+			@Url = @SlideShareUrl, 
+			@EntityTableId = @EntityTablePersonId, 
+			@RelatedId = @PersonId, 
+			@UrlTypeId = @UrlTypeIdOther, 
+			@CompanyId = @CompanyIdSlideShare, 
+			@UrlName = NULL, 
+			@SortOrder = 23
 	END
 
 	COMMIT TRANSACTION
@@ -287,11 +347,10 @@ VALUES (170396, 1, 77078, 1001, 2001, 9999)
 /* Empty Parameters
 DECLARE @FullName1 VARCHAR(255) = 'FIRST LAST',
 		@Alphabetic1 VARCHAR(255) = 'LAST, FIRST',
-		@FullNameOther VARCHAR(255) = '',
-		@AlphabeticOther VARCHAR(255) = '',
-		@FirstName VARCHAR(60) = 'FIRST',
-		@LastName VARCHAR(60) = 'LAST',
-		@MiddleName VARCHAR(60) = '',
+		@FullNameOther VARCHAR(255) = '', @AlphabeticOther VARCHAR(255) = '',
+		@FullNameOther2 VARCHAR(255) = '', @AlphabeticOther2 VARCHAR(255) = '',
+		@FullNameOther3 VARCHAR(255) = '', @AlphabeticOther3 VARCHAR(255) = '',
+		@FirstName VARCHAR(60) = 'FIRST', @LastName VARCHAR(60) = 'LAST', @MiddleName VARCHAR(60) = '',
 		@UniqueAdd VARCHAR(60) = NULL, -- person.unique_add
 		@HomeUrl VARCHAR(255) = '',
 		@BlogUrl VARCHAR(255) = '',
@@ -302,8 +361,11 @@ DECLARE @FullName1 VARCHAR(255) = 'FIRST LAST',
 		@GooglePlusUrl VARCHAR(255) = '',
 		@InstagramUrl VARCHAR(255) = '',
 		@FaceBookUrl VARCHAR(255) = '',
+		@FlickrUrl VARCHAR(255) = '',
+		@PinterestUrl VARCHAR(255) = '',
 		@StackOverflowUrl VARCHAR(255) = '',
 		@MediumUrl VARCHAR(255) = '',
-		@PluralsightUrl VARCHAR(255) = ''
+		@PluralsightUrl VARCHAR(255) = '',
+		@SlideShareUrl VARCHAR(255) = ''
 
 */
