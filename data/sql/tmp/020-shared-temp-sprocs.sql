@@ -36,6 +36,7 @@ CREATE PROCEDURE ##InsertName (
 
 	IF @DataDate IS NULL OR @DataDate = '' SET @DataDate = @DataMissing
 	IF @DataType IS NULL OR @DataType = '' SET @DataType = @Technology
+	IF @DataType = 'null' SET @DataType = NULL
 	IF @Wikipedia IS NULL OR @Wikipedia = '' SET @Wikipedia = @DataMissing
 
 	SELECT @UniqueNameId = un.unique_name_id, @FullName = un.unique_name, @FullAlphabetic = un.alphabetic FROM unique_name un WHERE un.unique_name = @Name

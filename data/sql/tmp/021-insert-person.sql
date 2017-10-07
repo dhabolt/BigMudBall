@@ -3,10 +3,13 @@ GO
 
 DECLARE @FullName1 VARCHAR(255) = 'FIRST LAST',
 		@Alphabetic1 VARCHAR(255) = 'LAST, FIRST',
+		@FirstName VARCHAR(60) = 'FIRST', @LastName VARCHAR(60) = 'LAST', @MiddleName VARCHAR(60) = '',
 		@FullNameOther VARCHAR(255) = '', @AlphabeticOther VARCHAR(255) = '',
 		@FullNameOther2 VARCHAR(255) = '', @AlphabeticOther2 VARCHAR(255) = '',
 		@FullNameOther3 VARCHAR(255) = '', @AlphabeticOther3 VARCHAR(255) = '',
-		@FirstName VARCHAR(60) = 'FIRST', @LastName VARCHAR(60) = 'LAST', @MiddleName VARCHAR(60) = '',
+		@FirstName2 VARCHAR(60) = '', @FirstName3 VARCHAR(60) = '', @FirstName4 VARCHAR(60) = '',
+		@LastName2 VARCHAR(60) = '', @LastName3 VARCHAR(60) = '', @LastName4 VARCHAR(60) = '',
+		@DataDate VARCHAR(50) = '', @DataType VARCHAR(50) = '',
 		@UniqueAdd VARCHAR(60) = NULL, -- person.unique_add
 		@HomeUrl VARCHAR(255) = '',
 		@BlogUrl VARCHAR(255) = '',
@@ -22,7 +25,9 @@ DECLARE @FullName1 VARCHAR(255) = 'FIRST LAST',
 		@StackOverflowUrl VARCHAR(255) = '',
 		@MediumUrl VARCHAR(255) = '',
 		@PluralsightUrl VARCHAR(255) = '',
-		@SlideShareUrl VARCHAR(255) = ''
+		@SlideShareUrl VARCHAR(255) = '', 
+		@QuoraUrl VARCHAR(255) = '', 
+		@RedditUrl VARCHAR(255) = ''
 
 -- Constants
 DECLARE @EntityTablePersonId INT = 1
@@ -34,7 +39,7 @@ DECLARE @DisplayOrderDefault INT = 9999, @DataMissing VARCHAR(20) = '????', @Tec
 DECLARE @UrlTypeIdHome INT = 28004, @UrlTypeIdSocial INT = 150715, @UrlTypeIdOther INT = 28005, @UrlTypeIdBlog INT = 28010
 DECLARE @CompanyIdTwitter INT = 51528, @CompanyIdGitHub INT = 51757, @CompanyIdLinkedIn INT = 51541, @CompanyIdFacebook INT = 51304, @CompanyIdPluralsight INT = 51768
 DECLARE @CompanyIdYouTube INT = 51099, @CompanyIdMedium INT = 51762, @CompanyIdGooglePlus INT = 51765, @CompanyIdInstagram INT = 51755, @CompanyIdStackOverflow INT = 51773
-DECLARE @CompanyIdFlickr INT = 51545, @CompanyIdPinterest INT = 51759, @CompanyIdSlideShare INT = 51764
+DECLARE @CompanyIdFlickr INT = 51545, @CompanyIdPinterest INT = 51759, @CompanyIdSlideShare INT = 51764, @CompanyIdQuora INT = 51767, @CompanyIdReddit INT = 51760
 
 -- Variables
 DECLARE @UniqueNameId INT, @NameId INT, @PersonId INT, @FullName VARCHAR(255), @FullAlphabetic VARCHAR(255)
@@ -49,7 +54,7 @@ BEGIN TRY
 		RAISERROR('The person already exists so we are aborting. Use the unique_add if we need to create a unique person.', 11, 1) -- Severity of 10 or lower WILL NOT BE HANDLED BY TRY/CATCH
 	END
 
-	INSERT INTO person (name) VALUES (@FullName1)
+	INSERT INTO person (name, unique_add) VALUES (@FullName1, @UniqueAdd)
 	SET @PersonId = SCOPE_IDENTITY()
 
 	INSERT INTO entity_list (entity_table_id, related_id, list_id, category_id, sort_order, start_accuracy_id, end_accuracy_id)
@@ -115,11 +120,83 @@ BEGIN TRY
 			@SortOrder = @DisplayOrderDefault
 	END
 
+	IF @FirstName2 != '' BEGIN
+		EXEC ##InsertName 
+			@Name = @FirstName2, 
+			@Alphabetic = @FirstName2,
+			@NameType = 'FirstName2', 
+			@NameTypeId = @NameTypePartId, 
+			@NameSubtypeId = @NameSubtypeFirstId, 
+			@EntityTableId = @EntityTablePersonId, 
+			@RelatedId = @PersonId, 
+			@SortOrder = @DisplayOrderDefault
+	END
+
+	IF @FirstName3 != '' BEGIN
+		EXEC ##InsertName 
+			@Name = @FirstName3, 
+			@Alphabetic = @FirstName3,
+			@NameType = 'FirstName3', 
+			@NameTypeId = @NameTypePartId, 
+			@NameSubtypeId = @NameSubtypeFirstId, 
+			@EntityTableId = @EntityTablePersonId, 
+			@RelatedId = @PersonId, 
+			@SortOrder = @DisplayOrderDefault
+	END
+
+	IF @FirstName4 != '' BEGIN
+		EXEC ##InsertName 
+			@Name = @FirstName4, 
+			@Alphabetic = @FirstName4,
+			@NameType = 'FirstName4', 
+			@NameTypeId = @NameTypePartId, 
+			@NameSubtypeId = @NameSubtypeFirstId, 
+			@EntityTableId = @EntityTablePersonId, 
+			@RelatedId = @PersonId, 
+			@SortOrder = @DisplayOrderDefault
+	END
+
 	IF @LastName != '' BEGIN
 		EXEC ##InsertName 
 			@Name = @LastName, 
 			@Alphabetic = @LastName,
 			@NameType = 'LastName', 
+			@NameTypeId = @NameTypePartId, 
+			@NameSubtypeId = @NameSubtypeLastId, 
+			@EntityTableId = @EntityTablePersonId, 
+			@RelatedId = @PersonId, 
+			@SortOrder = @DisplayOrderDefault
+	END
+
+	IF @LastName2 != '' BEGIN
+		EXEC ##InsertName 
+			@Name = @LastName2, 
+			@Alphabetic = @LastName2,
+			@NameType = 'LastName2', 
+			@NameTypeId = @NameTypePartId, 
+			@NameSubtypeId = @NameSubtypeLastId, 
+			@EntityTableId = @EntityTablePersonId, 
+			@RelatedId = @PersonId, 
+			@SortOrder = @DisplayOrderDefault
+	END
+
+	IF @LastName3 != '' BEGIN
+		EXEC ##InsertName 
+			@Name = @LastName3, 
+			@Alphabetic = @LastName3,
+			@NameType = 'LastName3', 
+			@NameTypeId = @NameTypePartId, 
+			@NameSubtypeId = @NameSubtypeLastId, 
+			@EntityTableId = @EntityTablePersonId, 
+			@RelatedId = @PersonId, 
+			@SortOrder = @DisplayOrderDefault
+	END
+
+	IF @LastName4 != '' BEGIN
+		EXEC ##InsertName 
+			@Name = @LastName4, 
+			@Alphabetic = @LastName4,
+			@NameType = 'LastName4', 
 			@NameTypeId = @NameTypePartId, 
 			@NameSubtypeId = @NameSubtypeLastId, 
 			@EntityTableId = @EntityTablePersonId, 
@@ -304,6 +381,28 @@ BEGIN TRY
 			@SortOrder = 23
 	END
 
+	IF @QuoraUrl != '' BEGIN
+		EXEC ##InsertUrl 
+			@Url = @QuoraUrl, 
+			@EntityTableId = @EntityTablePersonId, 
+			@RelatedId = @PersonId, 
+			@UrlTypeId = @UrlTypeIdOther, 
+			@CompanyId = @CompanyIdQuora, 
+			@UrlName = NULL, 
+			@SortOrder = 24
+	END
+
+	IF @RedditUrl != '' BEGIN
+		EXEC ##InsertUrl 
+			@Url = @RedditUrl, 
+			@EntityTableId = @EntityTablePersonId, 
+			@RelatedId = @PersonId, 
+			@UrlTypeId = @UrlTypeIdOther, 
+			@CompanyId = @CompanyIdReddit, 
+			@UrlName = NULL, 
+			@SortOrder = 25
+	END
+
 	COMMIT TRANSACTION
 	PRINT 'Transaction committed'
 END TRY
@@ -347,10 +446,13 @@ VALUES (170396, 1, 77078, 1001, 2001, 9999)
 /* Empty Parameters
 DECLARE @FullName1 VARCHAR(255) = 'FIRST LAST',
 		@Alphabetic1 VARCHAR(255) = 'LAST, FIRST',
+		@FirstName VARCHAR(60) = 'FIRST', @LastName VARCHAR(60) = 'LAST', @MiddleName VARCHAR(60) = '',
 		@FullNameOther VARCHAR(255) = '', @AlphabeticOther VARCHAR(255) = '',
 		@FullNameOther2 VARCHAR(255) = '', @AlphabeticOther2 VARCHAR(255) = '',
 		@FullNameOther3 VARCHAR(255) = '', @AlphabeticOther3 VARCHAR(255) = '',
-		@FirstName VARCHAR(60) = 'FIRST', @LastName VARCHAR(60) = 'LAST', @MiddleName VARCHAR(60) = '',
+		@FirstName2 VARCHAR(60) = '', @FirstName3 VARCHAR(60) = '', @FirstName4 VARCHAR(60) = '',
+		@LastName2 VARCHAR(60) = '', @LastName3 VARCHAR(60) = '', @LastName4 VARCHAR(60) = '',
+		@DataDate VARCHAR(50) = '', @DataType VARCHAR(50) = '',
 		@UniqueAdd VARCHAR(60) = NULL, -- person.unique_add
 		@HomeUrl VARCHAR(255) = '',
 		@BlogUrl VARCHAR(255) = '',
@@ -366,6 +468,8 @@ DECLARE @FullName1 VARCHAR(255) = 'FIRST LAST',
 		@StackOverflowUrl VARCHAR(255) = '',
 		@MediumUrl VARCHAR(255) = '',
 		@PluralsightUrl VARCHAR(255) = '',
-		@SlideShareUrl VARCHAR(255) = ''
+		@SlideShareUrl VARCHAR(255) = '', 
+		@QuoraUrl VARCHAR(255) = '', 
+		@RedditUrl VARCHAR(255) = ''
 
 */

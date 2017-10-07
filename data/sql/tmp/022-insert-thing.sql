@@ -3,13 +3,14 @@ GO
 
 DECLARE @StandardName VARCHAR(255) = '', @StandardAlphabetic VARCHAR(255) = '',
 		@Wikipedia VARCHAR(75) = '',
-		@DataDate VARCHAR(50) = '',
-		@DataType VARCHAR(50) = '',
+		@DataDate VARCHAR(50) = '', @DataType VARCHAR(50) = '',
 		@OtherName1 VARCHAR(255) = '', @OtherAlphabetic1 VARCHAR(255) = '',
 		@OtherName2 VARCHAR(255) = '', @OtherAlphabetic2 VARCHAR(255) = '',
 		@OtherName3 VARCHAR(255) = '', @OtherAlphabetic3 VARCHAR(255) = '',
 		@OtherName4 VARCHAR(255) = '', @OtherAlphabetic4 VARCHAR(255) = '',
 		@OtherName5 VARCHAR(255) = '', @OtherAlphabetic5 VARCHAR(255) = '',
+		@OtherName6 VARCHAR(255) = '', @OtherAlphabetic6 VARCHAR(255) = '',
+		@OtherName7 VARCHAR(255) = '', @OtherAlphabetic7 VARCHAR(255) = '',
 		@HomeUrl VARCHAR(255) = '',
 		@BlogUrl VARCHAR(255) = '',
 		@DocumentationUrl VARCHAR(255) = '',
@@ -122,6 +123,30 @@ BEGIN TRY
 			@Name = @OtherName5, 
 			@Alphabetic = @OtherAlphabetic5,
 			@NameType = 'OtherName5', 
+			@EntityTableId = @EntityTableIdThing, 
+			@RelatedId = @ThingId, 
+			@NameTypeId = @NameTypeIdFull, 
+			@NameSubtypeId = @NameSubtypeIdOther, 
+			@SortOrder = @DisplayOrderDefault
+	END
+
+	IF @OtherName6 != '' BEGIN
+		EXEC ##InsertName 
+			@Name = @OtherName6, 
+			@Alphabetic = @OtherAlphabetic6,
+			@NameType = 'OtherName6', 
+			@EntityTableId = @EntityTableIdThing, 
+			@RelatedId = @ThingId, 
+			@NameTypeId = @NameTypeIdFull, 
+			@NameSubtypeId = @NameSubtypeIdOther, 
+			@SortOrder = @DisplayOrderDefault
+	END
+
+	IF @OtherName7 != '' BEGIN
+		EXEC ##InsertName 
+			@Name = @OtherName7, 
+			@Alphabetic = @OtherAlphabetic7,
+			@NameType = 'OtherName7', 
 			@EntityTableId = @EntityTableIdThing, 
 			@RelatedId = @ThingId, 
 			@NameTypeId = @NameTypeIdFull, 
@@ -320,6 +345,8 @@ DECLARE @StandardName VARCHAR(255) = '', @StandardAlphabetic VARCHAR(255) = '',
 		@OtherName3 VARCHAR(255) = '', @OtherAlphabetic3 VARCHAR(255) = '',
 		@OtherName4 VARCHAR(255) = '', @OtherAlphabetic4 VARCHAR(255) = '',
 		@OtherName5 VARCHAR(255) = '', @OtherAlphabetic5 VARCHAR(255) = '',
+		@OtherName6 VARCHAR(255) = '', @OtherAlphabetic6 VARCHAR(255) = '',
+		@OtherName7 VARCHAR(255) = '', @OtherAlphabetic7 VARCHAR(255) = '',
 		@HomeUrl VARCHAR(255) = '',
 		@BlogUrl VARCHAR(255) = '',
 		@DocumentationUrl VARCHAR(255) = '',
