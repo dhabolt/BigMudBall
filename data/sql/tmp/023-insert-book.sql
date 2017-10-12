@@ -2,7 +2,7 @@ USE illustrated2
 GO
 
 DECLARE @StandardName VARCHAR(255) = 'TITLE', @StandardAlphabetic VARCHAR(255) = 'TITLE',
-		@DailyDate VARCHAR(20) = '2017.10.07',
+		@DailyDate VARCHAR(20) = '2017.10.12',
 		@EntityType VARCHAR(10) = 'Book',
 		@IsbnPaperback VARCHAR(30) = 'NULL', @IsbnPaperback10 VARCHAR(30) = 'NULL',
 		@IsbnDigital VARCHAR(30) = 'NULL', @IsbnDigital10 VARCHAR(30) = 'NULL',
@@ -24,7 +24,7 @@ DECLARE @NameSubtypeIdStandard INT = 2001, @NameSubtypeIdOther INT = 2004
 DECLARE @NameSubtypeIdLookup INT = 2019
 DECLARE @EntityTypeIdBook INT = 151033, @EntityTypeIdVideo INT = 151032, @EntityCategoryIdTechnology INT = 151026
 DECLARE @DateAccuracyIdYear INT = 100023, @DateAccuracyIdDay INT = 100027, @DateAccuracyIdUnknown INT = 150494
-DECLARE @DisplayOrderDefault INT = 9999, @DataMissing VARCHAR(20) = '????', @Technology VARCHAR(20) = 'Technology', @PrimaryIdEmpty INT = 19636
+DECLARE @DisplayOrderDefault INT = 9999, @DataMissing VARCHAR(20) = '????', @Technology VARCHAR(20) = @EntityType, @PrimaryIdEmpty INT = 19636
 DECLARE @UrlTypeIdHome INT = 28004, @UrlTypeIdSocial INT = 150715, @UrlTypeIdOther INT = 28005, @UrlTypeIdBlog INT = 28010
 DECLARE @BookTypeIdTechnology INT = 151028, @BookSubtypeIdUncategorized INT = 150646, @BookNumberSubtypeIdDigital INT = 151029
 DECLARE @BookNumberTypeIdIsbn INT = 37001, @BookNumberSubtypeIdPaperback INT = 150680
