@@ -1,8 +1,7 @@
 USE illustrated2
 GO
 
-DECLARE @FullName1 VARCHAR(255) = 'FIRST LAST',
-		@Alphabetic1 VARCHAR(255) = 'LAST, FIRST',
+DECLARE @FullName1 VARCHAR(255) = 'FIRST LAST', @Alphabetic1 VARCHAR(255) = 'LAST, FIRST',
 		@FirstName VARCHAR(60) = 'FIRST', @LastName VARCHAR(60) = 'LAST', @MiddleName VARCHAR(60) = '',
 		@FullNameOther VARCHAR(255) = '', @AlphabeticOther VARCHAR(255) = '',
 		@FullNameOther2 VARCHAR(255) = '', @AlphabeticOther2 VARCHAR(255) = '',
