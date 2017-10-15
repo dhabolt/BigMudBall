@@ -17,10 +17,10 @@ DECLARE @BookId INT = 0,
 		@IsNewVideo INT = 0,
 		@NewIncremental VARCHAR(2) = '1',
 		@ThingIds AS Identifiers,
-		@InformItDeal VARCHAR(20) = '42% off'
-INSERT @ThingIds(Id) VALUES (50521),(50522),(50523),(50524),(50525),(-5),(-6),(-7),(-8),(-9),(-10)
+		@InformItDeal VARCHAR(20) = '$19.99'
+INSERT @ThingIds(Id) VALUES (50531),(50532),(50534),(50535),(50536),(-5),(-6),(-7),(-8),(-9),(50533)
 
-SELECT @BookId = 50525, @IsManning = 1, @NewIncremental = '3', @InformItDeal = '', @DealDate = '10/13', @DailyDoseLink = '/daily/2017/10/13/'
+SELECT @BookId = 50536, @IsManning = 1, @NewIncremental = '1', @InformItDeal = '$19.99', @DealDate = '10/16', @DailyDoseLink = '/daily/2017/10/16/'
 
 -- ENTITY CONSTANTS
 DECLARE @BookEntityId INT = 8, @PersonEntityId INT = 1, @ThingEntityId INT = 50001

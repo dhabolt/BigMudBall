@@ -11,6 +11,9 @@ DECLARE @StandardName VARCHAR(255) = '', @StandardAlphabetic VARCHAR(255) = '',
 		@OtherName5 VARCHAR(255) = '', @OtherAlphabetic5 VARCHAR(255) = '',
 		@OtherName6 VARCHAR(255) = '', @OtherAlphabetic6 VARCHAR(255) = '',
 		@OtherName7 VARCHAR(255) = '', @OtherAlphabetic7 VARCHAR(255) = '',
+		@OtherName8 VARCHAR(255) = '', @OtherAlphabetic8 VARCHAR(255) = '',
+		@OtherName9 VARCHAR(255) = '', @OtherAlphabetic9 VARCHAR(255) = '',
+		@OtherName10 VARCHAR(255) = '', @OtherAlphabetic10 VARCHAR(255) = '',
 		@HomeUrl VARCHAR(255) = '',
 		@BlogUrl VARCHAR(255) = '',
 		@DocumentationUrl VARCHAR(255) = '',
@@ -20,6 +23,7 @@ DECLARE @StandardName VARCHAR(255) = '', @StandardAlphabetic VARCHAR(255) = '',
 		@YouTubeUrl VARCHAR(255) = '',
 		@GooglePlusUrl VARCHAR(255) = '',
 		@InstagramUrl VARCHAR(255) = '',
+		@GitterUrl VARCHAR(255) = '',
 		@FaceBookUrl VARCHAR(255) = '',
 		@StackOverflowUrl VARCHAR(255) = '',
 		@MediumUrl VARCHAR(255) = '',
@@ -35,6 +39,7 @@ DECLARE @DisplayOrderDefault INT = 9999, @DataMissing VARCHAR(20) = '????', @Tec
 DECLARE @UrlTypeIdHome INT = 28004, @UrlTypeIdSocial INT = 150715, @UrlTypeIdOther INT = 28005, @UrlTypeIdBlog INT = 28010
 DECLARE @CompanyIdTwitter INT = 51528, @CompanyIdGitHub INT = 51757, @CompanyIdLinkedIn INT = 51541, @CompanyIdFacebook INT = 51304, @CompanyIdPluralsight INT = 51768
 DECLARE @CompanyIdYouTube INT = 51099, @CompanyIdMedium INT = 51762, @CompanyIdGooglePlus INT = 51765, @CompanyIdInstagram INT = 51755, @CompanyIdStackOverflow INT = 51773
+DECLARE @CompanyIdGitter INT = 51771
 
 -- Variables
 DECLARE @UniqueNameId INT, @NameId INT, @ThingId INT, @FullName VARCHAR(255), @FullAlphabetic VARCHAR(255)
@@ -154,6 +159,42 @@ BEGIN TRY
 			@SortOrder = @DisplayOrderDefault
 	END
 
+	IF @OtherName8 != '' BEGIN
+		EXEC ##InsertName 
+			@Name = @OtherName8, 
+			@Alphabetic = @OtherAlphabetic8,
+			@NameType = 'OtherName8', 
+			@EntityTableId = @EntityTableIdThing, 
+			@RelatedId = @ThingId, 
+			@NameTypeId = @NameTypeIdFull, 
+			@NameSubtypeId = @NameSubtypeIdOther, 
+			@SortOrder = @DisplayOrderDefault
+	END
+
+	IF @OtherName7 != '' BEGIN
+		EXEC ##InsertName 
+			@Name = @OtherName9, 
+			@Alphabetic = @OtherAlphabetic9,
+			@NameType = 'OtherName9', 
+			@EntityTableId = @EntityTableIdThing, 
+			@RelatedId = @ThingId, 
+			@NameTypeId = @NameTypeIdFull, 
+			@NameSubtypeId = @NameSubtypeIdOther, 
+			@SortOrder = @DisplayOrderDefault
+	END
+
+	IF @OtherName10 != '' BEGIN
+		EXEC ##InsertName 
+			@Name = @OtherName10, 
+			@Alphabetic = @OtherAlphabetic10,
+			@NameType = 'OtherName10', 
+			@EntityTableId = @EntityTableIdThing, 
+			@RelatedId = @ThingId, 
+			@NameTypeId = @NameTypeIdFull, 
+			@NameSubtypeId = @NameSubtypeIdOther, 
+			@SortOrder = @DisplayOrderDefault
+	END
+
 	IF @HomeUrl != '' BEGIN
 		EXEC ##InsertUrl 
 			@Url = @HomeUrl, 
@@ -253,6 +294,17 @@ BEGIN TRY
 			@SortOrder = 15
 	END
 
+	IF @GitterUrl != '' BEGIN
+		EXEC ##InsertUrl 
+			@Url = @GitterUrl, 
+			@EntityTableId = @EntityTableIdThing, 
+			@RelatedId = @ThingId, 
+			@UrlTypeId = @UrlTypeIdSocial, 
+			@CompanyId = @CompanyIdGitter, 
+			@UrlName = NULL, 
+			@SortOrder = 16
+	END
+
 	IF @FaceBookUrl != '' BEGIN
 		EXEC ##InsertUrl 
 			@Url = @FaceBookUrl, 
@@ -261,7 +313,7 @@ BEGIN TRY
 			@UrlTypeId = @UrlTypeIdSocial, 
 			@CompanyId = @CompanyIdFacebook, 
 			@UrlName = NULL, 
-			@SortOrder = 16
+			@SortOrder = 20
 	END
 
 	IF @StackOverflowUrl != '' BEGIN
@@ -272,7 +324,7 @@ BEGIN TRY
 			@UrlTypeId = @UrlTypeIdSocial, 
 			@CompanyId = @CompanyIdStackOverflow, 
 			@UrlName = NULL, 
-			@SortOrder = 20
+			@SortOrder = 30
 	END
 
 	IF @MediumUrl != '' BEGIN
@@ -283,7 +335,7 @@ BEGIN TRY
 			@UrlTypeId = @UrlTypeIdSocial, 
 			@CompanyId = @CompanyIdMedium, 
 			@UrlName = NULL, 
-			@SortOrder = 21
+			@SortOrder = 32
 	END
 
 	IF @PluralsightUrl != '' BEGIN
@@ -294,7 +346,7 @@ BEGIN TRY
 			@UrlTypeId = @UrlTypeIdOther, 
 			@CompanyId = @CompanyIdPluralsight, 
 			@UrlName = NULL, 
-			@SortOrder = 22
+			@SortOrder = 34
 	END
 
 	COMMIT TRANSACTION
@@ -338,8 +390,7 @@ VALUES (170396, 1, 77078, 1001, 2001, 9999)
 /* Empty Parameters
 DECLARE @StandardName VARCHAR(255) = '', @StandardAlphabetic VARCHAR(255) = '',
 		@Wikipedia VARCHAR(75) = '',
-		@DataDate VARCHAR(50) = '',
-		@DataType VARCHAR(50) = '',
+		@DataDate VARCHAR(50) = '', @DataType VARCHAR(50) = '',
 		@OtherName1 VARCHAR(255) = '', @OtherAlphabetic1 VARCHAR(255) = '',
 		@OtherName2 VARCHAR(255) = '', @OtherAlphabetic2 VARCHAR(255) = '',
 		@OtherName3 VARCHAR(255) = '', @OtherAlphabetic3 VARCHAR(255) = '',
@@ -347,6 +398,9 @@ DECLARE @StandardName VARCHAR(255) = '', @StandardAlphabetic VARCHAR(255) = '',
 		@OtherName5 VARCHAR(255) = '', @OtherAlphabetic5 VARCHAR(255) = '',
 		@OtherName6 VARCHAR(255) = '', @OtherAlphabetic6 VARCHAR(255) = '',
 		@OtherName7 VARCHAR(255) = '', @OtherAlphabetic7 VARCHAR(255) = '',
+		@OtherName8 VARCHAR(255) = '', @OtherAlphabetic8 VARCHAR(255) = '',
+		@OtherName9 VARCHAR(255) = '', @OtherAlphabetic9 VARCHAR(255) = '',
+		@OtherName10 VARCHAR(255) = '', @OtherAlphabetic10 VARCHAR(255) = '',
 		@HomeUrl VARCHAR(255) = '',
 		@BlogUrl VARCHAR(255) = '',
 		@DocumentationUrl VARCHAR(255) = '',
@@ -356,6 +410,7 @@ DECLARE @StandardName VARCHAR(255) = '', @StandardAlphabetic VARCHAR(255) = '',
 		@YouTubeUrl VARCHAR(255) = '',
 		@GooglePlusUrl VARCHAR(255) = '',
 		@InstagramUrl VARCHAR(255) = '',
+		@GitterUrl VARCHAR(255) = '',
 		@FaceBookUrl VARCHAR(255) = '',
 		@StackOverflowUrl VARCHAR(255) = '',
 		@MediumUrl VARCHAR(255) = '',

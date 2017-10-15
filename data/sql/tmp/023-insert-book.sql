@@ -2,7 +2,7 @@ USE illustrated2
 GO
 
 DECLARE @StandardName VARCHAR(255) = 'TITLE', @StandardAlphabetic VARCHAR(255) = 'TITLE',
-		@DailyDate VARCHAR(20) = '2017.10.13',
+		@DailyDate VARCHAR(20) = '2017.10.16',
 		@EntityType VARCHAR(10) = 'Book',
 		@IsbnPaperback VARCHAR(30) = 'NULL', @IsbnPaperback10 VARCHAR(30) = 'NULL',
 		@IsbnDigital VARCHAR(30) = 'NULL', @IsbnDigital10 VARCHAR(30) = 'NULL',
@@ -14,7 +14,8 @@ DECLARE @StandardName VARCHAR(255) = 'TITLE', @StandardAlphabetic VARCHAR(255) =
 		@Wikipedia VARCHAR(75) = '',
 		@OtherName1 VARCHAR(255) = '', @OtherAlphabetic1 VARCHAR(255) = '',
 		@OtherName2 VARCHAR(255) = '', @OtherAlphabetic2 VARCHAR(255) = '',
-		@OtherName3 VARCHAR(255) = '', @OtherAlphabetic3 VARCHAR(255) = ''
+		@OtherName3 VARCHAR(255) = '', @OtherAlphabetic3 VARCHAR(255) = '',
+		@SafariUrl VARCHAR(255) = ''
 
 
 -- Constants
@@ -28,7 +29,7 @@ DECLARE @DisplayOrderDefault INT = 9999, @DataMissing VARCHAR(20) = '????', @Tec
 DECLARE @UrlTypeIdHome INT = 28004, @UrlTypeIdSocial INT = 150715, @UrlTypeIdOther INT = 28005, @UrlTypeIdBlog INT = 28010
 DECLARE @BookTypeIdTechnology INT = 151028, @BookSubtypeIdUncategorized INT = 150646, @BookNumberSubtypeIdDigital INT = 151029
 DECLARE @BookNumberTypeIdIsbn INT = 37001, @BookNumberSubtypeIdPaperback INT = 150680
-DECLARE @CompanyIdAmazon INT = 50990
+DECLARE @CompanyIdAmazon INT = 50990, @CompanyIdSafari INT = 51776
 DECLARE @NoteTypeIdDescription INT = 151035, @NoteTypeIdImage INT = 151031, @NoteTypeIdTwitterImageTags INT = 151038, @NoteTypeIdTwitter INT = 151037, @NoteTypeIdTweet INT = 151039, @NoteTypeIdBrief INT = 151036
 
 -- Variables
@@ -126,6 +127,17 @@ BEGIN TRY
 			@CompanyId = @CompanyIdAmazon, 
 			@UrlName = NULL, 
 			@SortOrder = 10
+	END
+
+	IF @SafariUrl != '' BEGIN
+		EXEC ##InsertUrl 
+			@Url = @SafariUrl, 
+			@EntityTableId = @EntityTableIdBook, 
+			@RelatedId = @BookId, 
+			@UrlTypeId = @UrlTypeIdOther, 
+			@CompanyId = @CompanyIdSafari, 
+			@UrlName = NULL, 
+			@SortOrder = 11
 	END
 
 	IF @IsbnPaperback IS NOT NULL BEGIN
@@ -241,7 +253,7 @@ VALUES (170396, 1, 77078, 1001, 2001, 9999)
 
 /* Empty Parameters
 DECLARE @StandardName VARCHAR(255) = 'TITLE', @StandardAlphabetic VARCHAR(255) = 'TITLE',
-		@DailyDate VARCHAR(20) = '2017.10.03',
+		@DailyDate VARCHAR(20) = '2017.10.15',
 		@EntityType VARCHAR(10) = 'Book',
 		@IsbnPaperback VARCHAR(30) = 'NULL', @IsbnPaperback10 VARCHAR(30) = 'NULL',
 		@IsbnDigital VARCHAR(30) = 'NULL', @IsbnDigital10 VARCHAR(30) = 'NULL',
@@ -253,7 +265,8 @@ DECLARE @StandardName VARCHAR(255) = 'TITLE', @StandardAlphabetic VARCHAR(255) =
 		@Wikipedia VARCHAR(75) = '',
 		@OtherName1 VARCHAR(255) = '', @OtherAlphabetic1 VARCHAR(255) = '',
 		@OtherName2 VARCHAR(255) = '', @OtherAlphabetic2 VARCHAR(255) = '',
-		@OtherName3 VARCHAR(255) = '', @OtherAlphabetic3 VARCHAR(255) = ''
+		@OtherName3 VARCHAR(255) = '', @OtherAlphabetic3 VARCHAR(255) = '',
+		@SafariUrl VARCHAR(255) = ''
 
 
 */
