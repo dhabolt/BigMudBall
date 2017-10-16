@@ -22,6 +22,7 @@ DECLARE @FullName1 VARCHAR(255) = 'FIRST LAST', @Alphabetic1 VARCHAR(255) = 'LAS
 		@FlickrUrl VARCHAR(255) = '',
 		@PinterestUrl VARCHAR(255) = '',
 		@StackOverflowUrl VARCHAR(255) = '',
+		@CrunchbaseUrl VARCHAR(255) = '',
 		@MediumUrl VARCHAR(255) = '',
 		@PluralsightUrl VARCHAR(255) = '',
 		@SlideShareUrl VARCHAR(255) = '', 
@@ -39,6 +40,7 @@ DECLARE @UrlTypeIdHome INT = 28004, @UrlTypeIdSocial INT = 150715, @UrlTypeIdOth
 DECLARE @CompanyIdTwitter INT = 51528, @CompanyIdGitHub INT = 51757, @CompanyIdLinkedIn INT = 51541, @CompanyIdFacebook INT = 51304, @CompanyIdPluralsight INT = 51768
 DECLARE @CompanyIdYouTube INT = 51099, @CompanyIdMedium INT = 51762, @CompanyIdGooglePlus INT = 51765, @CompanyIdInstagram INT = 51755, @CompanyIdStackOverflow INT = 51773
 DECLARE @CompanyIdFlickr INT = 51545, @CompanyIdPinterest INT = 51759, @CompanyIdSlideShare INT = 51764, @CompanyIdQuora INT = 51767, @CompanyIdReddit INT = 51760
+DECLARE @CompanyIdCrunchbase INT = 51777
 
 -- Variables
 DECLARE @UniqueNameId INT, @NameId INT, @PersonId INT, @FullName VARCHAR(255), @FullAlphabetic VARCHAR(255)
@@ -336,6 +338,17 @@ BEGIN TRY
 			@SortOrder = 18
 	END
 
+	IF @CrunchbaseUrl != '' BEGIN
+		EXEC ##InsertUrl 
+			@Url = @CrunchbaseUrl, 
+			@EntityTableId = @EntityTablePersonId, 
+			@RelatedId = @PersonId, 
+			@UrlTypeId = @UrlTypeIdSocial, 
+			@CompanyId = @CompanyIdCrunchbase, 
+			@UrlName = NULL, 
+			@SortOrder = 19
+	END
+
 	IF @StackOverflowUrl != '' BEGIN
 		EXEC ##InsertUrl 
 			@Url = @StackOverflowUrl, 
@@ -443,8 +456,7 @@ VALUES (170396, 1, 77078, 1001, 2001, 9999)
 */
 
 /* Empty Parameters
-DECLARE @FullName1 VARCHAR(255) = 'FIRST LAST',
-		@Alphabetic1 VARCHAR(255) = 'LAST, FIRST',
+DECLARE @FullName1 VARCHAR(255) = 'FIRST LAST', @Alphabetic1 VARCHAR(255) = 'LAST, FIRST',
 		@FirstName VARCHAR(60) = 'FIRST', @LastName VARCHAR(60) = 'LAST', @MiddleName VARCHAR(60) = '',
 		@FullNameOther VARCHAR(255) = '', @AlphabeticOther VARCHAR(255) = '',
 		@FullNameOther2 VARCHAR(255) = '', @AlphabeticOther2 VARCHAR(255) = '',
@@ -465,6 +477,7 @@ DECLARE @FullName1 VARCHAR(255) = 'FIRST LAST',
 		@FlickrUrl VARCHAR(255) = '',
 		@PinterestUrl VARCHAR(255) = '',
 		@StackOverflowUrl VARCHAR(255) = '',
+		@CrunchbaseUrl VARCHAR(255) = '',
 		@MediumUrl VARCHAR(255) = '',
 		@PluralsightUrl VARCHAR(255) = '',
 		@SlideShareUrl VARCHAR(255) = '', 
