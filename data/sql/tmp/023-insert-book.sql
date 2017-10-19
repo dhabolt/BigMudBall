@@ -2,7 +2,7 @@ USE illustrated2
 GO
 
 DECLARE @StandardName VARCHAR(255) = 'TITLE', @StandardAlphabetic VARCHAR(255) = 'TITLE',
-		@DailyDate VARCHAR(20) = '2017.10.16',
+		@DailyDate VARCHAR(20) = '2017.10.20',
 		@EntityType VARCHAR(10) = 'Book',
 		@IsbnPaperback VARCHAR(30) = 'NULL', @IsbnPaperback10 VARCHAR(30) = 'NULL',
 		@IsbnDigital VARCHAR(30) = 'NULL', @IsbnDigital10 VARCHAR(30) = 'NULL',

@@ -8,8 +8,7 @@ DECLARE @FullName1 VARCHAR(255) = 'FIRST LAST', @Alphabetic1 VARCHAR(255) = 'LAS
 		@FullNameOther3 VARCHAR(255) = '', @AlphabeticOther3 VARCHAR(255) = '',
 		@FirstName2 VARCHAR(60) = '', @FirstName3 VARCHAR(60) = '', @FirstName4 VARCHAR(60) = '',
 		@LastName2 VARCHAR(60) = '', @LastName3 VARCHAR(60) = '', @LastName4 VARCHAR(60) = '',
-		@DataDate VARCHAR(50) = '', @DataType VARCHAR(50) = '',
-		@UniqueAdd VARCHAR(60) = NULL, -- person.unique_add
+		@DataDate VARCHAR(50) = '', @DataType VARCHAR(50) = '', @Wikipedia VARCHAR(75) = '', @UniqueAdd VARCHAR(60) = NULL,
 		@HomeUrl VARCHAR(255) = '',
 		@BlogUrl VARCHAR(255) = '',
 		@TwitterUrl VARCHAR(255) = '',
@@ -65,6 +64,9 @@ BEGIN TRY
 		EXEC ##InsertName 
 			@Name = @FullName1, 
 			@Alphabetic = @Alphabetic1,
+			@Wikipedia = @Wikipedia,
+			@DataDate = @DataDate,
+			@DataType = @DataType,
 			@NameType = 'FullName1', 
 			@EntityTableId = @EntityTablePersonId, 
 			@RelatedId = @PersonId, 
@@ -463,8 +465,7 @@ DECLARE @FullName1 VARCHAR(255) = 'FIRST LAST', @Alphabetic1 VARCHAR(255) = 'LAS
 		@FullNameOther3 VARCHAR(255) = '', @AlphabeticOther3 VARCHAR(255) = '',
 		@FirstName2 VARCHAR(60) = '', @FirstName3 VARCHAR(60) = '', @FirstName4 VARCHAR(60) = '',
 		@LastName2 VARCHAR(60) = '', @LastName3 VARCHAR(60) = '', @LastName4 VARCHAR(60) = '',
-		@DataDate VARCHAR(50) = '', @DataType VARCHAR(50) = '',
-		@UniqueAdd VARCHAR(60) = NULL, -- person.unique_add
+		@DataDate VARCHAR(50) = '', @DataType VARCHAR(50) = '', @Wikipedia VARCHAR(75) = '', @UniqueAdd VARCHAR(60) = NULL,
 		@HomeUrl VARCHAR(255) = '',
 		@BlogUrl VARCHAR(255) = '',
 		@TwitterUrl VARCHAR(255) = '',

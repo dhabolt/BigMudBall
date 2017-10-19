@@ -18,9 +18,9 @@ DECLARE @BookId INT = 0,
 		@NewIncremental VARCHAR(2) = '1',
 		@ThingIds AS Identifiers,
 		@InformItDeal VARCHAR(20) = '$19.99'
-INSERT @ThingIds(Id) VALUES (50531),(50532),(50534),(50535),(50536),(-5),(-6),(-7),(-8),(-9),(50533)
+INSERT @ThingIds(Id) VALUES (50555),(50554),(50556),(50492),(50557),(50553),(-6),(50551),(50552),(-9),(-10)
 
-SELECT @BookId = 50536, @IsManning = 1, @NewIncremental = '1', @InformItDeal = '$19.99', @DealDate = '10/16', @DailyDoseLink = '/daily/2017/10/16/'
+SELECT @BookId = 50557, @IsManning = 1, @NewIncremental = '1', @InformItDeal = '$19.99', @DealDate = '10/20', @DailyDoseLink = '/daily/2017/10/20/'
 
 -- ENTITY CONSTANTS
 DECLARE @BookEntityId INT = 8, @PersonEntityId INT = 1, @ThingEntityId INT = 50001
